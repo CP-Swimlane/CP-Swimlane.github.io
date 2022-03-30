@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_e2f0de61f4484cdeb4592b76097b54f8 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_e2f0de61f4484cdeb4592b76097b54f8" ></div>
+        
+</body>
+<script>    
+    
+            var map_e2f0de61f4484cdeb4592b76097b54f8 = L.map(
+                "map_e2f0de61f4484cdeb4592b76097b54f8",
+                {
+                    center: [59.3247, 18.056],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 4,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f658190d61384ca6a312d4b737166ac8 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_e2f0de61f4484cdeb4592b76097b54f8);
+        
+    
+            var marker_b9f9f02bd9314f89975d4bf0513d2ea7 = L.marker(
+                [59.3247, 18.056],
+                {}
+            ).addTo(map_e2f0de61f4484cdeb4592b76097b54f8);
+        
+    
+            var icon_334b9860638b4d9b97e94b985d82b8d6 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "ok-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_b9f9f02bd9314f89975d4bf0513d2ea7.setIcon(icon_334b9860638b4d9b97e94b985d82b8d6);
+        
+    
+        var popup_27c36c6be1094fe696662b05dd406876 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_1f8cbe31cc5640519dee378a36fdc4bb = $(`<div id="html_1f8cbe31cc5640519dee378a36fdc4bb" style="width: 100.0%; height: 100.0%;"></div>`)[0];
+            popup_27c36c6be1094fe696662b05dd406876.setContent(html_1f8cbe31cc5640519dee378a36fdc4bb);
+        
+
+        marker_b9f9f02bd9314f89975d4bf0513d2ea7.bindPopup(popup_27c36c6be1094fe696662b05dd406876)
+        ;
+
+        
+    
+</script>
