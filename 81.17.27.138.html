@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_c8a539f9515a42a1937bf00b8a9a4f3f {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_c8a539f9515a42a1937bf00b8a9a4f3f" ></div>
+        
+</body>
+<script>    
+    
+            var map_c8a539f9515a42a1937bf00b8a9a4f3f = L.map(
+                "map_c8a539f9515a42a1937bf00b8a9a4f3f",
+                {
+                    center: [47.1449, 8.1551],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 4,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_f6afcf4662304fb78e62f1f5d0ba56d3 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_c8a539f9515a42a1937bf00b8a9a4f3f);
+        
+    
+            var marker_56dd8b82cdcf43f19f992a3a6ce62975 = L.marker(
+                [47.1449, 8.1551],
+                {}
+            ).addTo(map_c8a539f9515a42a1937bf00b8a9a4f3f);
+        
+    
+            var icon_57f3088cd4a848c2922089eac96a5a02 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "ok-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_56dd8b82cdcf43f19f992a3a6ce62975.setIcon(icon_57f3088cd4a848c2922089eac96a5a02);
+        
+    
+        var popup_7b969d69613e4cc1a9212acdd2936270 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_94a8863304e5451c8189ce17a06e7aed = $(`<div id="html_94a8863304e5451c8189ce17a06e7aed" style="width: 100.0%; height: 100.0%;">81.17.27.138</div>`)[0];
+            popup_7b969d69613e4cc1a9212acdd2936270.setContent(html_94a8863304e5451c8189ce17a06e7aed);
+        
+
+        marker_56dd8b82cdcf43f19f992a3a6ce62975.bindPopup(popup_7b969d69613e4cc1a9212acdd2936270)
+        ;
+
+        
+    
+</script>
