@@ -13,65 +13,15 @@
   <![endif]-->
   <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" rel="stylesheet" type="text/css">
   <link href="https://cdn.anychart.com/releases/v8/themes/dark_turquoise.css" rel="stylesheet" type="text/css">
-  
   <style>
     html, body, #container {
       width: 100%;
       height: 100%;
       margin: 0;
       padding: 0;
-      background-color: #171920;
+      background-color: #262626;
       color: white;
     }
-    .anychart-credits,
-      .anychart-credits-text {
-        display: none;
-
-      }
-
-      text {
-        font-family: Source Sans Pro,Open Sans,Arial,sans-serif!important;
-        font-weight: 400!important;
-      }
-
-      .chart-headers {
-        display: flex;
-        justify-content: space-between;
-        margin: 0 10px;
-      }
-      .chart-header {
-        background: none;
-        border: none;
-        border-bottom: 1px solid #505c75;
-        color: white;
-        padding: 0 0 4px 0;
-      }
-      .chart-column-buttons {
-        display: flex;
-        justify-content: space-between;
-        margin: 0 10px;
-      }
-      .chart-column-button {
-        align-items: center;
-        background: none;
-        border: none;
-        color: #A0AABE;
-        cursor: pointer;
-        display: flex;
-        padding: 4px 8px;
-      }
-      .chart-column-button:disabled {
-        cursor: not-allowed;
-        opacity: 0.5;
-      }
-      .chart-column-button:hover:not(:disabled),
-      .chart-column-button:active:not(:disabled),
-      .chart-column-button:focus:not(:disabled) {
-        color: #FFFFFF;
-      }
-      .chart-column-button__icon {
-        margin-right: 8px;
-      }
   </style>
 </head>
 <body>
@@ -83,7 +33,6 @@
     // Set the theme
     anychart.theme('darkTurquoise');
 
-
     // Create funnel chart with passed data
     var chart = anychart.funnel([
       ['Total Events for the Month', 7216301],
@@ -92,15 +41,14 @@
       ['Analyzed', 786622],
       ['Remediated', 643716],
       ['Critical/Emergency', 430012]
-    ]), ;
+    ]);
 
     // Set container id for the chart
     chart.container('container');
-
-
     // Initiate chart drawing
     chart.draw();
   });
 </script>
 </body>
 </html>
+
