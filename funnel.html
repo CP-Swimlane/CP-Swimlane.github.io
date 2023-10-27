@@ -10,11 +10,9 @@
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
- 
+  <![endif]-->
+  <link href="https://cdn.anychart.com/releases/v8/themes/dark_turquoise.css" rel="stylesheet" type="text/css">
   <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" rel="stylesheet" type="text/css">
- 
-   <![endif]-->
-   <link href="https://cdn.anychart.com/releases/v8/themes/dark_turquoise.css" rel="stylesheet" type="text/css">
   <style>
     html, body, #container {
       width: 100%;
@@ -27,6 +25,7 @@
     .anychart-credits,
       .anychart-credits-text {
         display: none;
+        background-color: #171920;
       }
 
       text {
@@ -91,7 +90,7 @@
       ['Analyzed', 786622],
       ['Remediated', 643716],
       ['Critical/Emergency', 430012]
-    ]);
+    ]), ;
 
     // Set container id for the chart
     chart.container('container');
