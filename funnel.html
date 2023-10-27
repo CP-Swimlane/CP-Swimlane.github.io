@@ -79,9 +79,7 @@
 <script type="text/javascript">
   anychart.onDocumentReady(function () {
     // Set the theme
-    anychart.theme('darkTurquoise');
-    chart.dataArea().background().enabled(true);
-    chart.dataArea().background().fill("#171920 0.2");
+    
 
     // Create funnel chart with passed data
     var chart = anychart.funnel([
@@ -95,6 +93,9 @@
 
     // Set container id for the chart
     chart.container('container');
+    anychart.theme('darkTurquoise');
+    chart.dataArea().background().enabled(true);
+    chart.dataArea().background().fill("#171920 0.2");
     // Initiate chart drawing
     chart.draw();
   });
