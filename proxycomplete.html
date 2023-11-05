@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Completed</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .message {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 20px;
+            display: inline-block;
+            border-radius: 5px;
+        }
+        h1 {
+            color: #4CAF50; /* Green color to indicate success */
+        }
+        p {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="message">
+        <h1>Request Completed</h1>
+        <p>Your request to <span id="action"></span> access to the site has been submitted.</p>
+        <p>If you need further assistance, please contact support.</p>
+    </div>
+    <script>
+        // This script sets the action text based on a query parameter.
+        document.addEventListener('DOMContentLoaded', function() {
+            var queryParams = new URLSearchParams(window.location.search);
+            var action = queryParams.get('action'); // 'block' or 'unblock'
+            var actionElement = document.getElementById('action');
+
+            // Update the text content based on the action parameter
+            if (action === 'unblock') {
+                actionElement.textContent = 'unblock';
+            } else {
+                // Default to 'block' if the action parameter is not 'unblock'
+                actionElement.textContent = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
