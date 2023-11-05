@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unblock Request</title>
+</head>
+<body>
+    <h1>Processing your request...</h1>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var queryParams = new URLSearchParams(window.location.search);
+            var site = queryParams.get('site');
+            var timestamp = queryParams.get('timestamp');
+
+            // Prepare the data as query parameters
+            var data = {
+                site: site,
+                timestamp: timestamp,
+                response: 'no'
+            };
+            var encodedData = new URLSearchParams(data).toString();
+
+            // Send the POST request to the webhook
+            fetch('https://us1.swimlane.app/account/337f672d-44fa-41c6-86e9-c109507cdcbc/tenant/67eeecaa-7e25-4634-9703-cfbdfd9f2a7e/webhooks/v1/webhook/6d999c1d-3be1-4305-8897-c144140af732/ProxyBlock?' + encodedData, {
+                method: 'POST',
+                mode: "no-cors", // assuming no-cors is needed as in your example
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: JSON.stringify(data) // sending as a JSON string as per your example
+            })
+            .then(response => {
+                // Normally, you can't read the response with no-cors, but we'll assume success
+                // Redirect to the desired page
+                window.location.href = 'https://www.google.com';
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                // Handle the error, maybe redirect to an error page
+            });
+        });
+    </script>
+</body>
+</html>
