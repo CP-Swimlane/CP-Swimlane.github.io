@@ -31,7 +31,7 @@
                 headers: {
                     'Content-Type': 'text/plain'
                 },
-                body: JSON.dumps(endcodedData) // sending as a JSON string as per your example
+                body: `data` // sending as a JSON string as per your example
             })
             .then(response => {
                 // Normally, you can't read the response with no-cors, but we'll assume success
