@@ -16,24 +16,17 @@
         .container {
             text-align: center;
         }
-        .close-btn {
+        .info-text {
             margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #555;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-        }
-        .close-btn:hover {
-            background-color: #666;
+            color: #bbb; /* Lighter text for info */
         }
     </style>
 </head>
 <body onload="postDataThenClose()">
 
 <div class="container">
-    <p>Response Received, nothing left to do but close this window.</p>
-    <button class="close-btn" target=”_self” rel=”noopener” onclick="window.close();">Close Window</button>
+    <p>Response Received, nothing left to do.</p>
+    <p class="info-text">Please close this window.</p>
 </div>
 
 <script>
