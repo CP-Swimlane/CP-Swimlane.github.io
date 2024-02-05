@@ -2,22 +2,49 @@
 <html>
 <head>
     <title>Auto Post and Close</title>
+    <style>
+        body {
+            background-color: #333; /* Dark background */
+            color: #fff; /* Light text */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        .close-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #555;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+        }
+        .close-btn:hover {
+            background-color: #666;
+        }
+    </style>
 </head>
 <body onload="postDataThenClose()">
-<!--"https://us1.swimlane.app/account/06426f32-580e-458b-81d6-f58c302a658b/tenant/a57d0333-755f-4cdf-ab9b-7b9cc38942ba/webhooks/v1/webhook/8f10281c-9c2d-4ab1-b272-80b547b79f71/Approved"-->
+
+<div class="container">
+    <p>Response Received, nothing left to do but close this window.</p>
+    <button class="close-btn" onclick="window.close();">Close Window</button>
+</div>
+
 <script>
 function postDataThenClose() {
-    // Assuming you're passing data through query parameters for a POST request
     var webhookUrl = "https://us1.swimlane.app/account/06426f32-580e-458b-81d6-f58c302a658b/tenant/a57d0333-755f-4cdf-ab9b-7b9cc38942ba/webhooks/v1/webhook/8f10281c-9c2d-4ab1-b272-80b547b79f71/Approved";
-    var queryParams = 'status={"Approved":"Approved"}';  // Example query parameter
+    var queryParams = 'status={"Approved":"Approved"}';
 
-    // Append the query parameters to the webhook URL
     var fullUrl = webhookUrl + "?" + queryParams;
 
     fetch(fullUrl, {
         method: "POST",
-        // No 'body' since you're passing data in the URL
-
     })
     .then(response => {
         if (response.ok) {
@@ -25,10 +52,13 @@ function postDataThenClose() {
         } else {
             console.log("Post failed");
         }
-        // Closing the window is omitted due to browser restrictions
     })
     .catch(error => {
         console.error("Error posting data: ", error);
     });
 }
 </script>
+
+</body>
+</html>
+
