@@ -17,10 +17,7 @@ function postDataThenClose() {
     fetch(fullUrl, {
         method: "POST",
         // No 'body' since you're passing data in the URL
-        headers: {
-            // If you're not sending JSON, adjust or remove the Content-Type header
-            "Content-Type": "application/x-www-form-urlencoded"
-        }
+
     })
     .then(response => {
         if (response.ok) {
