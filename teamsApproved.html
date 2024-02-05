@@ -4,21 +4,22 @@
     <title>Auto Post and Close</title>
 </head>
 <body onload="postDataThenClose()">
-
+<!--"https://us1.swimlane.app/account/06426f32-580e-458b-81d6-f58c302a658b/tenant/a57d0333-755f-4cdf-ab9b-7b9cc38942ba/webhooks/v1/webhook/8f10281c-9c2d-4ab1-b272-80b547b79f71/Approved"-->
 <script>
 function postDataThenClose() {
-    // Define the webhook URL and the data you want to send
-    var webhookUrl = "https://us1.swimlane.app/account/06426f32-580e-458b-81d6-f58c302a658b/tenant/a57d0333-755f-4cdf-ab9b-7b9cc38942ba/webhooks/v1/webhook/8f10281c-9c2d-4ab1-b272-80b547b79f71/Approved";
-    var dataToSend = {
-        status: "Approved"
-    };
+    // Assuming you're passing data through query parameters for a POST request
+    var webhookUrl = "https://us1.swimlane.app/account/06426f32-580e-458b-81d6-f58c302a658b/tenant/a57d0333-755f-4cdf-ab9b-7b9cc38942ba/webhooks/v1/webhook/8f10281c-9c2d-4ab1-b272-80b547b79f71/Approved"";
+    var queryParams = 'status={"Approved":"Approved"}';  // Example query parameter
 
-    // Create the POST request
-    fetch(webhookUrl, {
+    // Append the query parameters to the webhook URL
+    var fullUrl = webhookUrl + "?" + queryParams;
+
+    fetch(fullUrl, {
         method: "POST",
-        body: JSON.stringify(dataToSend),
+        // No 'body' since you're passing data in the URL
         headers: {
-            "Content-Type": "application/json"
+            // If you're not sending JSON, adjust or remove the Content-Type header
+            "Content-Type": "application/x-www-form-urlencoded"
         }
     })
     .then(response => {
@@ -27,16 +28,14 @@ function postDataThenClose() {
         } else {
             console.log("Post failed");
         }
-        // Close the window after the POST request
-        window.close();
+        // Closing the window is omitted due to browser restrictions
     })
     .catch(error => {
         console.error("Error posting data: ", error);
-        // Attempt to close even if POST fails
-        window.close();
     });
 }
 </script>
+
 
 </body>
 </html>
