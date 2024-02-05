@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auto Post and Close</title>
+</head>
+<body onload="postDataThenClose()">
+
+<script>
+function postDataThenClose() {
+    // Define the webhook URL and the data you want to send
+    var webhookUrl = "https://us1.swimlane.app/account/06426f32-580e-458b-81d6-f58c302a658b/tenant/a57d0333-755f-4cdf-ab9b-7b9cc38942ba/webhooks/v1/webhook/8f10281c-9c2d-4ab1-b272-80b547b79f71/Approved";
+    var dataToSend = {
+        status: "Approved"
+    };
+
+    // Create the POST request
+    fetch(webhookUrl, {
+        method: "POST",
+        body: JSON.stringify(dataToSend),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log("Post successful");
+        } else {
+            console.log("Post failed");
+        }
+        // Close the window after the POST request
+        window.close();
+    })
+    .catch(error => {
+        console.error("Error posting data: ", error);
+        // Attempt to close even if POST fails
+        window.close();
+    });
+}
+</script>
+
+</body>
+</html>
