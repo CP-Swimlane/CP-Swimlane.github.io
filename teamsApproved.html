@@ -9,7 +9,7 @@
 function postDataThenClose() {
     // Assuming you're passing data through query parameters for a POST request
     var webhookUrl = "https://us1.swimlane.app/account/06426f32-580e-458b-81d6-f58c302a658b/tenant/a57d0333-755f-4cdf-ab9b-7b9cc38942ba/webhooks/v1/webhook/8f10281c-9c2d-4ab1-b272-80b547b79f71/Approved";
-    var queryParams = 'status={"Approved":"Denied"}';  // Example query parameter
+    var queryParams = 'status={"Approved":"Approved"}';  // Example query parameter
 
     // Append the query parameters to the webhook URL
     var fullUrl = webhookUrl + "?" + queryParams;
