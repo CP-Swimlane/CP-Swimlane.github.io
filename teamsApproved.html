@@ -3,6 +3,7 @@
 <head>
     <title>Auto Post and Close</title>
     <style>
+        /* Your existing CSS */
         body {
             background-color: #333; /* Dark background */
             color: #fff; /* Light text */
@@ -16,23 +17,36 @@
         .container {
             text-align: center;
         }
-        .info-text {
+        .close-btn {
             margin-top: 20px;
-            color: #bbb; /* Lighter text for info */
+            padding: 10px 20px;
+            background-color: #555;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+        }
+        .close-btn:hover {
+            background-color: #666;
         }
     </style>
 </head>
 <body onload="postDataThenClose()">
 
 <div class="container">
-    <p>Response Received, nothing left to do.</p>
-    <p class="info-text">Please close this window manually.</p>
+    <p>Approval Response Received.</p>
+    <p class="info-text">Please close this window.</p>
 </div>
 
 <script>
+function getQueryParam(param) {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
 function postDataThenClose() {
+    var trackingId = getQueryParam('tracking-id'); // Extract 'tracking-id' from URL
     var webhookUrl = "https://us1.swimlane.app/account/06426f32-580e-458b-81d6-f58c302a658b/tenant/a57d0333-755f-4cdf-ab9b-7b9cc38942ba/webhooks/v1/webhook/8f10281c-9c2d-4ab1-b272-80b547b79f71/Approved";
-    var queryParams = 'status={"Approved":"Approved"}';
+    var queryParams = 'status={"Approved":"Approved"}' + '&tracking-id=' + encodeURIComponent(trackingId);
 
     var fullUrl = webhookUrl + "?" + queryParams;
 
@@ -54,5 +68,3 @@ function postDataThenClose() {
 
 </body>
 </html>
-
-
