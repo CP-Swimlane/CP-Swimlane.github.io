@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auto Post and Close</title>
+    <style>
+        /* Your existing CSS */
+        body {
+            background-color: #333; /* Dark background */
+            color: #fff; /* Light text */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        .close-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #555;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+        }
+        .close-btn:hover {
+            background-color: #666;
+        }
+    </style>
+</head>
+<body onload="postDataThenClose()">
+
+<div class="container">
+    <p>Denied Response Received.</p>
+    <p class="info-text">Please close this window.</p>
+</div>
+
+<script>
+function getQueryParam(param) {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+function postDataThenClose() {
+    var trackingId = getQueryParam('tracking-id'); // Extract 'tracking-id' from URL
+    var webhookUrl = "https://jp1.swimlane.app/account/e2af937e-0a8e-4679-85ea-82c81f00b0bd/tenant/12287fb7-c51b-4510-b036-acb6261127ba/webhooks/v1/webhook/c07df959-5c5d-443e-a04c-c6089210690b/Denied";
+    var queryParams = 'status=Denied' + '&tracking-id=' + encodeURIComponent(trackingId);
+
+    var fullUrl = webhookUrl + "?" + queryParams;
+
+    fetch(fullUrl, {
+        method: "POST",
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log("Post successful");
+        } else {
+            console.log("Post failed");
+        }
+    })
+    .catch(error => {
+        console.error("Error posting data: ", error);
+    });
+}
+</script>
+
+</body>
+</html>
