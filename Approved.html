@@ -45,7 +45,7 @@ function getQueryParam(param) {
 
 function postDataThenClose() {
     var trackingId = getQueryParam('tracking-id'); // Extract 'tracking-id' from URL
-    var webhookUrl = "https://us1.swimlane.app/account/e5ca6852-209d-4f70-8e0d-fa7f6c47aa07/tenant/9c3b8b8f-3594-45e8-8f5e-aed274c22eb8/webhooks/v1/webhook/8f10281c-9c2d-4ab1-b272-80b547b79f71/Approved";
+    var webhookUrl = "https://us1.swimlane.app/account/08f7a4ef-ea40-46d8-bfbf-bbf9b841f4e2/tenant/4d897724-81ba-4aa9-b3d7-8f6ac8e7bbae/webhooks/v1/webhook/8f10281c-9c2d-4ab1-b272-80b547b79f71/Approved";
     var queryParams = 'status=Approved' + '&tracking-id=' + encodeURIComponent(trackingId);
 
     var fullUrl = webhookUrl + "?" + queryParams;
