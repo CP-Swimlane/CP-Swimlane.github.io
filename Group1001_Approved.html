@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auto Post and Close</title>
+    <style>
+        /* Your existing CSS */
+        body {
+            background-color: #333; /* Dark background */
+            color: #fff; /* Light text */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        .close-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #555;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+        }
+        .close-btn:hover {
+            background-color: #666;
+        }
+    </style>
+</head>
+<body onload="postDataThenClose()">
+
+<div class="container">
+    <p>Approval Response Received.</p>
+    <p class="info-text">Please close this window.</p>
+</div>
+
+<script>
+function getQueryParam(param) {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+function postDataThenClose() {
+    var trackingId = getQueryParam('tracking-id'); // Extract 'tracking-id' from URL
+    var webhookUrl = "https://us1.swimlane.app/account/08f7a4ef-ea40-46d8-bfbf-bbf9b841f4e2/tenant/4d897724-81ba-4aa9-b3d7-8f6ac8e7bbae/webhooks/v1/webhook/8f10281c-9c2d-4ab1-b272-80b547b79f71/Approved";
+    var queryParams = 'status=Approved' + '&tracking-id=' + encodeURIComponent(trackingId);
+
+    var fullUrl = webhookUrl + "?" + queryParams;
+
+    fetch(fullUrl, {
+        method: "POST",
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log("Post successful");
+        } else {
+            console.log("Post failed");
+        }
+    })
+    .catch(error => {
+        console.error("Error posting data: ", error);
+    });
+}
+</script>
+
+</body>
+</html>
