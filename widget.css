@@ -1,17 +1,21 @@
-/* Swimlane Dark – Brand Aligned, Colorful Demo CSS
-   Core palette tuned for dark UI:
-   - Backgrounds:      #0F1320 / #141A2A / #0B1020
-   - Border:           #212A3B
-   - Text:             #E8EEF6  / Muted #9AA6B2
-   - Primary Blue:     #007AFF  (hover: #0FB0F4)
-   - Teal:             #39CCCC
-   - Purple:           #7A5AF5
-   - Lime:             #88E12A
-   - Orange:           #FFB020
-   - Pink/Red:         #FF3366
-*/
+/* =========================================================
+   Swimlane Dark – Brand-Aligned, Colorful Demo CSS
+   Purpose: visually rich palette for dark backgrounds
+   ---------------------------------------------------------
+   Colors (tuned for Swimlane dark UI)
+   BG:        #0F1320  #141A2A  #0B1020
+   Border:    #212A3B
+   Text:      #E8EEF6  (muted #9AA6B2)
+   Accents:   blue #007AFF / #0FB0F4
+              teal #39CCCC
+              purple #7A5AF5
+              lime #88E12A
+              orange #FFB020
+              pink #FF3366
+   ========================================================= */
 
 :root{
+  /* Core surface + type */
   --bg-0:#0F1320;
   --bg-1:#141A2A;
   --bg-2:#0B1020;
@@ -20,6 +24,7 @@
   --text:#E8EEF6;
   --muted:#9AA6B2;
 
+  /* Accents */
   --primary:#007AFF;
   --primary-600:#0FB0F4;
   --teal:#39CCCC;
@@ -28,22 +33,30 @@
   --orange:#FFB020;
   --pink:#FF3366;
 
+  /* Radius, motion, effects */
   --radius:14px;
-  --shadow:0 10px 30px rgba(0,0,0,.45);
-  --focus:0 0 0 3px rgba(15,176,244,.35);
-  --pad:14px;
+  --radius-sm:10px;
   --gap:12px;
+  --pad:14px;
+  --focus:0 0 0 3px rgba(15,176,244,.35);
+  --shadow:0 10px 30px rgba(0,0,0,.45);
 
+  /* Font */
   --font:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
 }
 
+/* ---------------- Base / Layout ---------------- */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
-  margin:0; background:radial-gradient(1200px 600px at 10% -10%, rgba(122,90,245,.15), transparent 60%) no-repeat,
-             radial-gradient(1000px 500px at 110% 10%, rgba(0,122,255,.12), transparent 60%) no-repeat,
-             var(--bg-0);
-  color:var(--text); font-family:var(--font); line-height:1.45;
+  margin:0;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(122,90,245,.15), transparent 60%) no-repeat,
+    radial-gradient(1000px 500px at 110% 10%, rgba(0,122,255,.12), transparent 60%) no-repeat,
+    var(--bg-0);
+  color:var(--text);
+  font-family:var(--font);
+  line-height:1.45;
 }
 
 /* Utilities */
@@ -53,33 +66,51 @@ body{
 .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 .spacer{height:12px}
 
-/* Card */
+/* ---------------- Containers ---------------- */
 .card{
   background:linear-gradient(180deg, rgba(255,255,255,.03), transparent), var(--bg-1);
-  border:1px solid var(--border); border-radius:var(--radius);
-  box-shadow:var(--shadow); padding:var(--pad);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:var(--pad);
+  color:var(--text);
 }
 .card h3{margin:0 0 8px; font-size:16px; font-weight:700; color:#fff}
 .card .muted{color:var(--muted); font-size:12px}
 
-/* Pills / Tabs */
-.tabs{display:flex; gap:8px; padding:6px; border:1px solid var(--border); border-radius:999px; background:var(--bg-2)}
-.tab{
-  padding:8px 14px; border-radius:999px; cursor:pointer; font-weight:600; color:var(--muted);
+/* ---------------- Tabs (pill style) ---------------- */
+.tabs{
+  display:flex; gap:8px; padding:6px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background:var(--bg-2);
+  width:max-content;
 }
+.tab{
+  padding:8px 14px; border-radius:999px; cursor:pointer;
+  font-weight:700; color:var(--muted); user-select:none;
+  transition:transform .12s ease, background .2s ease, color .2s ease;
+}
+.tab:hover{transform:translateY(-1px)}
 .tab.active{color:#061019; background:linear-gradient(135deg, var(--primary), var(--primary-600))}
 .tab.teal.active{background:linear-gradient(135deg, var(--teal), #7cf7f7)}
 .tab.purple.active{background:linear-gradient(135deg, var(--purple), #b19cff)}
 
-/* Buttons */
+/* ---------------- Buttons ---------------- */
 .btn{
-  border:1px solid var(--border); border-radius:12px;
-  background:#0f1726; color:var(--text); padding:10px 14px;
-  font-weight:700; cursor:pointer; transition:.15s ease transform, .2s ease background, .2s ease border-color;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#0f1726;
+  color:var(--text);
+  padding:10px 14px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.15s ease transform, .2s ease background, .2s ease border-color, .2s ease opacity;
 }
 .btn:hover{transform:translateY(-1px); border-color:#2d3a55}
 .btn:active{transform:translateY(0)}
 .btn:focus{outline:none; box-shadow:var(--focus)}
+.btn:disabled{opacity:.5; cursor:not-allowed}
 
 .btn.primary{background:linear-gradient(135deg, var(--primary), var(--primary-600)); border-color:transparent; color:#061019}
 .btn.teal{background:linear-gradient(135deg, var(--teal), #7cf7f7); border-color:transparent; color:#061414}
@@ -89,12 +120,16 @@ body{
 .btn.pink{background:linear-gradient(135deg, var(--pink), #ff84a3); border-color:transparent; color:#1a050a}
 .btn.ghost{background:transparent}
 
-/* Badges / Chips */
+/* ---------------- Badges / Chips ---------------- */
 .badges{display:flex; gap:8px; flex-wrap:wrap}
 .badge{
   display:inline-flex; align-items:center; gap:6px;
-  border:1px solid var(--border); border-radius:999px; padding:4px 10px;
-  background:#0f1726; color:var(--text); font-weight:700; font-size:12px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:4px 10px;
+  background:#0f1726;
+  color:var(--text);
+  font-weight:700; font-size:12px;
 }
 .badge::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--muted)}
 .badge.blue{color:var(--primary); border-color:rgba(0,122,255,.35); background:rgba(0,122,255,.12)}
@@ -110,58 +145,89 @@ body{
 .badge.orange::before{background:var(--orange)}
 .badge.pink::before{background:var(--pink)}
 
-/* Alerts */
+/* ---------------- Alerts ---------------- */
 .alert{
-  border-radius:var(--radius); padding:12px 14px; font-weight:600;
-  border:1px solid var(--border); background:#10182a;
+  border-radius:var(--radius);
+  padding:12px 14px;
+  font-weight:700;
+  border:1px solid var(--border);
+  background:#10182a;
 }
 .alert.info{border-color:rgba(0,122,255,.4); background:rgba(0,122,255,.1); color:var(--primary)}
 .alert.ok{border-color:rgba(57,204,204,.4); background:rgba(57,204,204,.1); color:var(--teal)}
 .alert.warn{border-color:rgba(255,176,32,.45); background:rgba(255,176,32,.1); color:var(--orange)}
 .alert.err{border-color:rgba(255,51,102,.45); background:rgba(255,51,102,.1); color:var(--pink)}
 
-/* Progress */
+/* ---------------- Progress ---------------- */
 .progress{
-  height:10px; border-radius:999px; background:#0c1120; border:1px solid var(--border); overflow:hidden;
+  height:10px; border-radius:999px;
+  background:#0c1120; border:1px solid var(--border);
+  overflow:hidden;
 }
 .progress > .bar{height:100%; background:linear-gradient(90deg, var(--primary), var(--primary-600)); width:40%}
-.progress.teal > .bar{background:linear-gradient(90deg, var(--teal), #7cf7f7)}
-.progress.purple > .bar{background:linear-gradient(90deg, var(--purple), #b19cff)}
-.progress.lime > .bar{background:linear-gradient(90deg, var(--lime), #c9ff8c)}
+.progress.teal > .bar{background:linear-gradient(90deg, var(--teal), #7cf7f7))}
+.progress.purple > .bar{background:linear-gradient(90deg, var(--purple), #b19cff))}
+.progress.lime > .bar{background:linear-gradient(90deg, var(--lime), #c9ff8c))}
 
-/* Toggle / Slider */
-.switch{--w:44px; --h:24px; position:relative; width:var(--w); height:var(--h); background:#0e1526; border:1px solid var(--border); border-radius:999px}
+/* ---------------- Toggle & Range ---------------- */
+.switch{
+  --w:44px; --h:24px;
+  position:relative; width:var(--w); height:var(--h);
+  background:#0e1526; border:1px solid var(--border); border-radius:999px;
+}
 .switch input{appearance:none; width:100%; height:100%; margin:0; outline:none}
-.knob{position:absolute; top:2px; left:2px; width:20px; height:20px; border-radius:50%; background:#4b5568; transition:.2s}
+.knob{
+  position:absolute; top:2px; left:2px; width:20px; height:20px;
+  border-radius:50%; background:#4b5568; transition:.2s;
+}
 .switch input:checked + .knob{left:calc(100% - 22px); background:var(--primary)}
-.range{width:100%}
 input[type="range"]{accent-color:var(--primary)}
 
-/* Inputs */
+/* ---------------- Inputs ---------------- */
 .input, .select, .textarea{
-  width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--border);
-  background:#0c1222; color:var(--text)
+  width:100%; padding:10px 12px;
+  border-radius:var(--radius-sm);
+  border:1px solid var(--border);
+  background:#0c1222; color:var(--text);
+  transition:border-color .2s ease, box-shadow .2s ease;
 }
-.input::placeholder,.textarea::placeholder{color:#7a8696}
+.input:focus, .select:focus, .textarea:focus{outline:none; border-color:#2d3a55; box-shadow:var(--focus)}
+.input::placeholder, .textarea::placeholder{color:#7a8696}
 .textarea{min-height:100px; resize:vertical}
 
-/* Table */
+/* ---------------- Table ---------------- */
 .table{
-  width:100%; border:1px solid var(--border); border-radius:12px; overflow:hidden; background:#0e1422;
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+  background:#0e1422;
   border-collapse:separate; border-spacing:0;
 }
-.table th,.table td{padding:10px 12px; border-bottom:1px solid var(--border)}
-.table thead th{font-size:12px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted)}
+.table th, .table td{padding:10px 12px; border-bottom:1px solid var(--border)}
+.table thead th{
+  font-size:12px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted);
+  background:#0e1425;
+}
 .table tbody tr:hover{background:rgba(255,255,255,.04)}
 .table tbody tr:last-child td{border-bottom:none}
 
-/* Code block */
+/* ---------------- Code Block ---------------- */
 .pre{
-  background:#0b101e; border:1px solid var(--border); border-radius:12px;
-  padding:12px; overflow:auto; font-size:12px; color:#d9e3f1;
+  background:#0b101e;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  overflow:auto;
+  font-size:12px;
+  color:#d9e3f1;
 }
 
-/* Headings */
+/* ---------------- Headings ---------------- */
 .h1{font-size:24px; font-weight:800}
 .h2{font-size:18px; font-weight:700}
 .sub{color:var(--muted); font-size:13px}
+
+/* ---------------- Small helpers for spacing ---------------- */
+.mt-8{margin-top:8px} .mt-12{margin-top:12px} .mt-16{margin-top:16px}
+.mb-8{margin-bottom:8px} .mb-12{margin-bottom:12px} .mb-16{margin-bottom:16px}
