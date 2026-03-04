@@ -1,0 +1,2279 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "summary": "Login user",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Users credentials",
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/LoginDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "The user has successfully logged in.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthResponseDto" } } }
+          },
+          "401": { "description": "Unauthorized." }
+        },
+        "tags": ["auth"]
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "operationId": "AuthController_logout",
+        "summary": "Logout user",
+        "parameters": [],
+        "responses": {
+          "204": { "description": "The user has successfully logged out." },
+          "401": { "description": "The token is not valid or is missing." }
+        },
+        "tags": ["auth"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "HealthFeatureController_getHealth",
+        "summary": "Health info",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The api health info has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/HealthMonitoringDto" } } }
+          }
+        },
+        "tags": ["health"]
+      }
+    },
+    "/connectors/categories": {
+      "get": {
+        "operationId": "CategoriesController_listCategories",
+        "summary": "Get connectors categories",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The categories have been successfully retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CategoriesPaginatedDto" } } }
+          }
+        },
+        "tags": ["connectors/categories"]
+      }
+    },
+    "/connectors/featured/collection": {
+      "get": {
+        "operationId": "FeaturedConnectorsController_listFeaturedConnectors",
+        "summary": "Get connectors from the featured connectors collection",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The featured connectors have been successfully retrieved.",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/FeaturedConnectorsPaginatedDto" } }
+            }
+          }
+        },
+        "tags": ["connectors/featured"]
+      }
+    },
+    "/connectors/featured/update": {
+      "put": {
+        "operationId": "FeaturedConnectorsController_addFeaturedConnector",
+        "summary": "Adds a connector to the featured collection",
+        "parameters": [
+          { "name": "author", "required": true, "in": "query", "schema": { "type": "string" } },
+          { "name": "connectorName", "required": true, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "204": { "description": "The connector_featured has been successfully updated." },
+          "400": { "description": "The data provided is not valid." },
+          "404": { "description": "The connector not found" }
+        },
+        "tags": ["connectors/featured"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/connectors/featured/{id}": {
+      "delete": {
+        "operationId": "FeaturedConnectorsController_deleteConnector",
+        "summary": "Deletes a connector from the featured list ",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "204": { "description": "The connector has been successfully deleted from the Featured List." },
+          "400": { "description": "The id provided doesn't have a valid format or is missing." },
+          "401": { "description": "The token is not valid or is missing." },
+          "403": { "description": "The user doesn't have access to use this endpoint." },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["connectors/featured"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/connectors": {
+      "get": {
+        "operationId": "ConnectorsController_getConnectors",
+        "summary": "Get all connectors",
+        "description": "Get the list of all connectors. Can be filtered and sorted.\n\n<b>Default</b>: <list><li><i>sortField:</i> _id (or) createdAt</li><li><i>sortOrder:</i> desc</li></list>",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "filterBy[]",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          { "name": "sortField", "required": false, "in": "query", "schema": { "type": "string" } },
+          { "name": "sortOrder", "required": false, "in": "query", "schema": { "type": "string" } },
+          { "name": "sb", "required": false, "in": "query", "schema": { "type": "boolean" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of connectors has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetEntitiesResponseDto" } } }
+          }
+        },
+        "tags": ["connectors"]
+      }
+    },
+    "/connectors/featured": {
+      "get": {
+        "operationId": "ConnectorsController_listFeaturedConnectors",
+        "summary": "Get featured connectors",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of featured connectors has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BasePaginatedDto" } } }
+          }
+        },
+        "tags": ["connectors"]
+      }
+    },
+    "/connectors/recents": {
+      "get": {
+        "operationId": "ConnectorsController_listRecentConnectors",
+        "summary": "Get recent connectors",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of recent connectors has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ConnectorsPaginatedDto" } } }
+          }
+        },
+        "tags": ["connectors"]
+      }
+    },
+    "/connectors/upload": {
+      "post": {
+        "operationId": "ConnectorsController_getConnectorsData",
+        "summary": "Uploads a version of a connector ",
+        "parameters": [
+          { "name": "repository", "required": true, "in": "query", "schema": { "type": "string" } },
+          { "name": "version", "required": true, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "201": { "description": "The connector has been successfully inserted." },
+          "400": { "description": "The repository or the version provided don't have a valid format or are missing." },
+          "404": { "description": "The connector is not found." }
+        },
+        "tags": ["connectors"]
+      }
+    },
+    "/connectors/{owner}/{name}/{version}": {
+      "get": {
+        "operationId": "ConnectorsController_getDetailBySlug",
+        "summary": "Get connector detail",
+        "parameters": [
+          { "name": "owner", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "name", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "version", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the connector's detail",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ConnectorDto" } } }
+          },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["connectors"]
+      }
+    },
+    "/connectors/{owner}/{name}": {
+      "get": {
+        "operationId": "ConnectorsController_getDetailByOwnerAndName",
+        "summary": "Get connector detail",
+        "parameters": [
+          { "name": "owner", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "name", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the connector's detail",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ConnectorDto" } } }
+          },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["connectors"]
+      }
+    },
+    "/connectors/download": {
+      "get": {
+        "operationId": "ConnectorsController_downloadConnector",
+        "summary": "Downloads the connector connector detail",
+        "parameters": [
+          { "name": "repository", "required": true, "in": "query", "schema": { "type": "string" } },
+          { "name": "version", "required": true, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the connector's detail",
+            "content": { "application/zip": { "schema": { "type": "string", "format": "binary" } } }
+          },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["connectors"]
+      }
+    },
+    "/connectors/{id}": {
+      "delete": {
+        "operationId": "ConnectorsController_deleteConnector",
+        "summary": "Deletes a version of a connector ",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "204": { "description": "The connector has been successfully deleted." },
+          "400": { "description": "The id provided doesn't have a valid format or is missing." },
+          "401": { "description": "The token is not valid or is missing." },
+          "403": { "description": "The user doesn't have access to use this endpoint." },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["connectors"],
+        "security": [{ "bearer": [] }]
+      },
+      "get": {
+        "operationId": "ConnectorsController_getDetailById",
+        "summary": "Get connector detail",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "Get the connector's detail",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ConnectorDto" } } }
+          },
+          "404": { "description": "The id is not found" }
+        },
+        "tags": ["connectors"]
+      }
+    },
+    "/connectors/update/search/collection": {
+      "put": {
+        "operationId": "ConnectorsController_createAggregatedCollection",
+        "summary": "Update search connectors collection",
+        "parameters": [],
+        "responses": {
+          "204": { "description": "The collection is updated." },
+          "403": { "description": "The user doesn't have access to use this endpoint." }
+        },
+        "tags": ["connectors"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/connectors/latest": {
+      "post": {
+        "operationId": "ConnectorsController_getLatestVersions",
+        "summary": "Get the latest versions of each connector",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Connector versions",
+          "content": {
+            "application/json": {
+              "schema": { "type": "array", "items": { "$ref": "#/components/schemas/ConnectorVersion" } }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Get the latest versions.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/ConnectorVersion" } }
+              }
+            }
+          },
+          "404": { "description": "The connector is not found." }
+        },
+        "tags": ["connectors"]
+      }
+    },
+    "/connectors/manifest/{id}": {
+      "get": {
+        "operationId": "ConnectorsController_downloadConnectorManifestLabels",
+        "summary": "Downloads a connector's manifest labels",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "Get the connector's manifest labels",
+            "content": { "application/zip": { "schema": { "type": "string", "format": "binary" } } }
+          },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["connectors"]
+      }
+    },
+    "/indexing/quay": {
+      "post": {
+        "operationId": "IndexingController_indexFromQuay",
+        "summary": "Indexes a connector from Quay",
+        "parameters": [
+          { "name": "repository", "required": true, "in": "query", "schema": { "type": "string" } },
+          { "name": "version", "required": true, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "201": { "description": "The connector has been successfully inserted." },
+          "400": { "description": "The repository or the version provided don't have a valid format or are missing." },
+          "404": { "description": "The connector is not found." }
+        },
+        "tags": ["indexing"]
+      }
+    },
+    "/indexing/manifests": {
+      "post": {
+        "operationId": "IndexingController_indexManifests",
+        "summary": "Indexes the manifests of a connector ",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": { "type": "object", "properties": { "file": { "type": "string", "format": "binary" } } }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "The connector has been successfully indexed." },
+          "400": { "description": "The repository or the version provided don't have a valid format or are missing." }
+        },
+        "tags": ["indexing"]
+      }
+    },
+    "/indexing/solutions": {
+      "post": {
+        "operationId": "IndexingController_indexSolutions",
+        "summary": "Indexes a solution",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": { "type": "object", "properties": { "file": { "type": "string", "format": "binary" } } }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "The solution has been successfully indexed." },
+          "400": { "description": "The solution file is missing." }
+        },
+        "tags": ["indexing"]
+      }
+    },
+    "/indexing/components": {
+      "post": {
+        "operationId": "IndexingController_indexComponents",
+        "summary": "Indexes a component",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": { "type": "object", "properties": { "file": { "type": "string", "format": "binary" } } }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "The component has been successfully indexed." },
+          "400": { "description": "The component file is missing." }
+        },
+        "tags": ["indexing"]
+      }
+    },
+    "/indexing/intents": {
+      "post": {
+        "operationId": "IndexingController_indexIntents",
+        "summary": "Indexes an intent",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": { "type": "object", "properties": { "file": { "type": "string", "format": "binary" } } }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "The intent has been successfully indexed." },
+          "400": { "description": "The intent file is missing." }
+        },
+        "tags": ["indexing"]
+      }
+    },
+    "/indexing/sb-components": {
+      "post": {
+        "operationId": "IndexingController_indexSbComponents",
+        "summary": "Indexes a solution builder component.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": { "type": "object", "properties": { "file": { "type": "string", "format": "binary" } } }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "The solution builder component has been successfully indexed." },
+          "400": { "description": "The solution builder component file is missing." }
+        },
+        "tags": ["indexing"]
+      }
+    },
+    "/indexing/sb-solutions": {
+      "post": {
+        "operationId": "IndexingController_indexSbSolutions",
+        "summary": "Indexes a solution builder playbook",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": { "type": "object", "properties": { "file": { "type": "string", "format": "binary" } } }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "The solution builder playbook has been successfully indexed." },
+          "400": { "description": "The solution builder playbook file is missing." }
+        },
+        "tags": ["indexing"]
+      }
+    },
+    "/indexing/sb-playbooks": {
+      "post": {
+        "operationId": "IndexingController_indexPlaybooks",
+        "summary": "Indexes a canvas playbook",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": { "type": "object", "properties": { "file": { "type": "string", "format": "binary" } } }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "The canvas playbook has been successfully indexed." },
+          "400": { "description": "The canvas playbook file is missing." }
+        },
+        "tags": ["indexing"]
+      }
+    },
+    "/stats/metadata": {
+      "get": {
+        "operationId": "ConnectorStatsController_getConnectorsMetadata",
+        "summary": "Retrieves connector metadata",
+        "parameters": [],
+        "responses": { "200": { "description": "The connector has been successfully inserted." } },
+        "tags": ["stats"]
+      }
+    },
+    "/files/{fileKey}": {
+      "get": {
+        "operationId": "FilesController_getDetail",
+        "summary": "Get connector detail",
+        "parameters": [{ "name": "fileKey", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Get a file by id" }, "404": { "description": "The id is not found." } },
+        "tags": ["files"]
+      }
+    },
+    "/solutions/recents": {
+      "get": {
+        "operationId": "SolutionsController_listRecentSolutions",
+        "summary": "Get recent solutions",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of recent solutions has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SolutionsPaginatedDto" } } }
+          }
+        },
+        "tags": ["solutions"]
+      }
+    },
+    "/solutions": {
+      "get": {
+        "operationId": "SolutionsController_getSolutions",
+        "summary": "Get all solutions",
+        "description": "Get the list of all solutions. Can be filtered and sorted.\n\n<b>Default</b>: <list><li><i>sortField:</i> _id (or) createdAt</li><li><i>sortOrder:</i> desc</li></list>",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "filterBy[]",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          { "name": "sortField", "required": false, "in": "query", "schema": { "type": "string" } },
+          { "name": "sortOrder", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of solutions has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetEntitiesResponseDto" } } }
+          }
+        },
+        "tags": ["solutions"]
+      }
+    },
+    "/solutions/{owner}/{name}/{version}": {
+      "get": {
+        "operationId": "SolutionsController_getDetailBySlug",
+        "summary": "Get solution's detail",
+        "parameters": [
+          { "name": "owner", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "name", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "version", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the solution's detail",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SolutionDto" } } }
+          },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["solutions"]
+      }
+    },
+    "/solutions/featured": {
+      "get": {
+        "operationId": "SolutionsController_listFeaturedSolutions",
+        "summary": "Get featured solutions",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of featured solutions has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BasePaginatedDto" } } }
+          }
+        },
+        "tags": ["solutions"]
+      }
+    },
+    "/solutions/{id}": {
+      "get": {
+        "operationId": "SolutionsController_getDetailById",
+        "summary": "Get solution's detail",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "Get the solution's detail",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SolutionDto" } } }
+          },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["solutions"]
+      },
+      "delete": {
+        "operationId": "SolutionsController_deleteSolution",
+        "summary": "Deletes a version of a solution ",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "204": { "description": "The solution has been successfully deleted." },
+          "400": { "description": "The id provided doesn't have a valid format or is missing." },
+          "401": { "description": "The token is not valid or is missing." },
+          "403": { "description": "The user doesn't have access to use this endpoint." },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["solutions"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/search": {
+      "get": {
+        "operationId": "SearchController_getEntities",
+        "summary": "Get all content types by filter",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "filterBy[]",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          { "name": "sortField", "required": false, "in": "query", "schema": { "type": "string" } },
+          { "name": "sortOrder", "required": false, "in": "query", "schema": { "type": "string" } },
+          { "name": "sb", "required": false, "in": "query", "schema": { "type": "boolean" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of results has been retrieved",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetEntitiesResponseDto" } } }
+          },
+          "404": { "description": "Nothing was found with the given filter" }
+        },
+        "tags": ["search"]
+      }
+    },
+    "/search/{id}": {
+      "delete": {
+        "operationId": "SearchController_deleteEntity",
+        "summary": "Deletes a search entity",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "204": { "description": "The entity has been successfully deleted." },
+          "400": { "description": "The id provided doesn't have a valid format or is missing." },
+          "401": { "description": "The token is not valid or is missing." },
+          "403": { "description": "The user doesn't have access to use this endpoint." },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["search"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/components": {
+      "get": {
+        "operationId": "ComponentsController_getComponents",
+        "summary": "Get all components",
+        "description": "Get the list of all components. Can be filtered and sorted.\n\n<b>Default</b>: <list><li><i>sortField:</i> _id (or) createdAt</li><li><i>sortOrder:</i> desc</li></list>",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "filterBy[]",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          { "name": "sortField", "required": false, "in": "query", "schema": { "type": "string" } },
+          { "name": "sortOrder", "required": false, "in": "query", "schema": { "type": "string" } },
+          { "name": "sb", "required": false, "in": "query", "schema": { "type": "boolean" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of components has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetEntitiesResponseDto" } } }
+          }
+        },
+        "tags": ["components"]
+      }
+    },
+    "/components/recents": {
+      "get": {
+        "operationId": "ComponentsController_listRecentComponents",
+        "summary": "Get recent components",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of recent components has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ComponentsPaginatedDto" } } }
+          }
+        },
+        "tags": ["components"]
+      }
+    },
+    "/components/{owner}/{name}/{version}": {
+      "get": {
+        "operationId": "ComponentsController_getDetailBySlug",
+        "summary": "Get component's details",
+        "parameters": [
+          { "name": "owner", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "name", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "version", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the component's details",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ComponentDto" } } }
+          },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["components"]
+      }
+    },
+    "/components/featured": {
+      "get": {
+        "operationId": "ComponentsController_getFeaturedComponents",
+        "summary": "Get featured components",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of featured components has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BasePaginatedDto" } } }
+          }
+        },
+        "tags": ["components"]
+      }
+    },
+    "/components/{id}": {
+      "get": {
+        "operationId": "ComponentsController_getDetailById",
+        "summary": "Get component's details",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "Get the component's details",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ComponentDto" } } }
+          },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["components"]
+      },
+      "delete": {
+        "operationId": "ComponentsController_deleteComponent",
+        "summary": "Deletes a version of a component ",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "204": { "description": "The component has been successfully deleted." },
+          "400": { "description": "The id provided doesn't have a valid format or is missing." },
+          "401": { "description": "The token is not valid or is missing." },
+          "403": { "description": "The user doesn't have access to use this endpoint." },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["components"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/intents/recents": {
+      "get": {
+        "operationId": "IntentsController_listRecentIntents",
+        "summary": "Get recent intents",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of recent intents has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/IntentsPaginatedDto" } } }
+          }
+        },
+        "tags": ["intents"]
+      }
+    },
+    "/intents": {
+      "get": {
+        "operationId": "IntentsController_getIntents",
+        "summary": "Get all intents",
+        "description": "Get the list of all intents. Can be filtered and sorted.\n\n<b>Default</b>: <list><li><i>sortField:</i> _id (or) createdAt</li><li><i>sortOrder:</i> desc</li></list>",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "filterBy[]",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          { "name": "sortField", "required": false, "in": "query", "schema": { "type": "string" } },
+          { "name": "sortOrder", "required": false, "in": "query", "schema": { "type": "string" } },
+          { "name": "sb", "required": false, "in": "query", "schema": { "type": "boolean" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of intents has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetEntitiesResponseDto" } } }
+          }
+        },
+        "tags": ["intents"]
+      }
+    },
+    "/intents/{owner}/{name}/{version}": {
+      "get": {
+        "operationId": "IntentsController_getDetailBySlug",
+        "summary": "Get intent's detail",
+        "parameters": [
+          { "name": "owner", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "name", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "version", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the intent's detail",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/IntentDto" } } }
+          },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["intents"]
+      }
+    },
+    "/intents/featured": {
+      "get": {
+        "operationId": "IntentsController_listFeaturedIntents",
+        "summary": "Get featured intents",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of featured intents has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BasePaginatedDto" } } }
+          }
+        },
+        "tags": ["intents"]
+      }
+    },
+    "/intents/{id}": {
+      "get": {
+        "operationId": "IntentsController_getDetailById",
+        "summary": "Get intent's detail",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "Get the intent's detail",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/IntentDto" } } }
+          },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["intents"]
+      },
+      "delete": {
+        "operationId": "IntentsController_deleteIntent",
+        "summary": "Deletes a version of a intent ",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "204": { "description": "The intent has been successfully deleted." },
+          "400": { "description": "The id provided doesn't have a valid format or is missing." },
+          "401": { "description": "The token is not valid or is missing." },
+          "403": { "description": "The user doesn't have access to use this endpoint." },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["intents"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/sb-components": {
+      "get": {
+        "operationId": "SbComponentsController_getSbComponents",
+        "summary": "Get all solution builder components",
+        "description": "Get the list of all solution builder components. Can be filtered and sorted.\n\n<b>Default</b>: <list><li><i>sortField:</i> _id (or) createdAt</li><li><i>sortOrder:</i> desc</li></list>",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "filterBy[]",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          { "name": "sortField", "required": false, "in": "query", "schema": { "type": "string" } },
+          { "name": "sortOrder", "required": false, "in": "query", "schema": { "type": "string" } },
+          { "name": "sb", "required": false, "in": "query", "schema": { "type": "boolean" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of components has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetEntitiesResponseDto" } } }
+          }
+        },
+        "tags": ["sb-components"]
+      }
+    },
+    "/sb-components/recents": {
+      "get": {
+        "operationId": "SbComponentsController_listRecentSbComponents",
+        "summary": "Get recent solution builder components",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of recent components has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SbComponentsPaginatedDto" } } }
+          }
+        },
+        "tags": ["sb-components"]
+      }
+    },
+    "/sb-components/{owner}/{name}/{version}": {
+      "get": {
+        "operationId": "SbComponentsController_getDetailBySlug",
+        "summary": "Get solution builder component's details",
+        "parameters": [
+          { "name": "owner", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "name", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "version", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the component's details",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SbComponentDto" } } }
+          },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["sb-components"]
+      }
+    },
+    "/sb-components/featured": {
+      "get": {
+        "operationId": "SbComponentsController_getFeaturedSbComponents",
+        "summary": "Get featured solution builder components",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of featured components has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BasePaginatedDto" } } }
+          }
+        },
+        "tags": ["sb-components"]
+      }
+    },
+    "/sb-components/{id}": {
+      "get": {
+        "operationId": "SbComponentsController_getDetailById",
+        "summary": "Get solution builder component's details",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "Get the component's details",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SbComponentDto" } } }
+          },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["sb-components"]
+      },
+      "delete": {
+        "operationId": "SbComponentsController_deleteSbComponent",
+        "summary": "Deletes a version of a solution builder component ",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "204": { "description": "The component has been successfully deleted." },
+          "400": { "description": "The id provided doesn't have a valid format or is missing." },
+          "401": { "description": "The token is not valid or is missing." },
+          "403": { "description": "The user doesn't have access to use this endpoint." },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["sb-components"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/sb-solutions": {
+      "get": {
+        "operationId": "SbSolutionsController_getSbSolutions",
+        "summary": "Get all solutions",
+        "description": "Get the list of all solution builder playbooks. Can be filtered and sorted.\n\n<b>Default</b>: <list><li><i>sortField:</i> _id (or) createdAt</li><li><i>sortOrder:</i> desc</li></list>",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "filterBy[]",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          { "name": "sortField", "required": false, "in": "query", "schema": { "type": "string" } },
+          { "name": "sortOrder", "required": false, "in": "query", "schema": { "type": "string" } },
+          { "name": "sb", "required": false, "in": "query", "schema": { "type": "boolean" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of solutions has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetEntitiesResponseDto" } } }
+          }
+        },
+        "tags": ["sb-solutions"]
+      }
+    },
+    "/sb-solutions/recents": {
+      "get": {
+        "operationId": "SbSolutionsController_listRecentSbSolutions",
+        "summary": "Get recent solution builder playbooks",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of recent solutions has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SbSolutionsPaginatedDto" } } }
+          }
+        },
+        "tags": ["sb-solutions"]
+      }
+    },
+    "/sb-solutions/{owner}/{name}/{version}": {
+      "get": {
+        "operationId": "SbSolutionsController_getDetailBySlug",
+        "summary": "Get solution builder playbook's details",
+        "parameters": [
+          { "name": "owner", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "name", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "version", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the solution's details",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SbSolutionDto" } } }
+          },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["sb-solutions"]
+      }
+    },
+    "/sb-solutions/featured": {
+      "get": {
+        "operationId": "SbSolutionsController_getFeaturedSbSolutions",
+        "summary": "Get featured solution builder playbook",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of featured solutions has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BasePaginatedDto" } } }
+          }
+        },
+        "tags": ["sb-solutions"]
+      }
+    },
+    "/sb-solutions/{id}": {
+      "get": {
+        "operationId": "SbSolutionsController_getDetailById",
+        "summary": "Get solution builder playbook's details",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "Get the solution's details",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SbSolutionDto" } } }
+          },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["sb-solutions"]
+      },
+      "delete": {
+        "operationId": "SbSolutionsController_deleteSbSolution",
+        "summary": "Deletes a version of a solution builder playbook ",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "204": { "description": "The solution has been successfully deleted." },
+          "400": { "description": "The id provided doesn't have a valid format or is missing." },
+          "401": { "description": "The token is not valid or is missing." },
+          "403": { "description": "The user doesn't have access to use this endpoint." },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["sb-solutions"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/seo": {
+      "post": {
+        "operationId": "SeoController_updateSeo",
+        "summary": "Updates the seo for each entity type",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": { "type": "object", "properties": { "file": { "type": "string", "format": "binary" } } }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "The entity's seo has been successfully updated." },
+          "400": { "description": "There was an issue updating the SEO" }
+        },
+        "tags": ["seo"]
+      },
+      "get": {
+        "operationId": "SeoController_getSeo",
+        "summary": "Gets the seo for all entities",
+        "parameters": [],
+        "responses": {
+          "201": { "description": "The entity's seo has been successfully retrieved." },
+          "400": { "description": "There was an issue getting SEO records" }
+        },
+        "tags": ["seo"]
+      }
+    },
+    "/products": {
+      "get": {
+        "operationId": "AppDirectSyncController_getUnSyncedRecords",
+        "summary": "Get all unsynced records with app direct",
+        "description": "Get the list of all products(connectors,components,solutions).",
+        "parameters": [
+          { "name": "update", "required": true, "in": "query", "schema": { "default": "false", "type": "string" } },
+          { "name": "edition", "required": true, "in": "query", "schema": { "type": "string" } },
+          { "name": "name", "required": true, "in": "query", "schema": { "type": "string" } },
+          { "name": "contains", "required": true, "in": "query", "schema": { "type": "string" } },
+          { "name": "marketplace_stub", "required": true, "in": "query", "schema": { "type": "string" } },
+          { "name": "offset", "required": true, "in": "query", "schema": { "type": "number" } },
+          { "name": "limit", "required": true, "in": "query", "schema": { "type": "number" } },
+          { "name": "action", "required": true, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get list of products.",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/ProductSyncResponseDto" } }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "AppDirectSyncController_updateRecords",
+        "summary": "Update a content(component or connector or solution) record with app direct version.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RecordUpdateDto" } } }
+        },
+        "responses": {
+          "200": { "description": "The record is successfully updated." },
+          "204": { "description": "The record is successfully updated." },
+          "400": { "description": "Invalid request data." },
+          "401": { "description": "The token is not valid or missing." },
+          "403": { "description": "Forbidden operation without valid token" }
+        }
+      }
+    },
+    "/products/categories": {
+      "post": {
+        "operationId": "AppDirectSyncController_listCategories",
+        "summary": "Get product categories",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CategoryEntityDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "The categories have been successfully retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CategoriesPaginatedDto" } } }
+          },
+          "201": {
+            "description": "The categories have been successfully retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CategoriesPaginatedDto" } } }
+          }
+        }
+      }
+    },
+    "/products/categories/{id}": {
+      "delete": {
+        "operationId": "AppDirectSyncController_deleteCategory",
+        "summary": "Deletes a category",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "204": { "description": "The category has been successfully deleted." },
+          "400": { "description": "The id provided doesn't have a valid format or is missing." },
+          "401": { "description": "The token is not valid or is missing." },
+          "403": { "description": "The user doesn't have access to use this endpoint." },
+          "404": { "description": "The id is not found." }
+        },
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/products/count": {
+      "get": {
+        "operationId": "AppDirectSyncController_getEntitiesAndActionsCount",
+        "summary": "Get Entities and Connector actions count.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The Entities and Connector actions count have been successfully retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/EntityCountResponseDto" } } }
+          }
+        }
+      }
+    },
+    "/sb-playbooks": {
+      "get": {
+        "operationId": "SbPlaybooksController_getSbPlaybooks",
+        "summary": "Get all canvas playbooks",
+        "description": "Get the list of all canvas playbooks. Can be filtered and sorted.\n\n<b>Default</b>: <list><li><i>sortField:</i> _id (or) createdAt</li><li><i>sortOrder:</i> desc</li></list>",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          {
+            "name": "filterBy[]",
+            "required": false,
+            "in": "query",
+            "schema": { "type": "array", "items": { "type": "string" } }
+          },
+          { "name": "sortField", "required": false, "in": "query", "schema": { "type": "string" } },
+          { "name": "sortOrder", "required": false, "in": "query", "schema": { "type": "string" } },
+          { "name": "sb", "required": false, "in": "query", "schema": { "type": "boolean" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of canvas playbooks has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetEntitiesResponseDto" } } }
+          }
+        },
+        "tags": ["sb-playbooks"]
+      }
+    },
+    "/sb-playbooks/recents": {
+      "get": {
+        "operationId": "SbPlaybooksController_listRecentSbPlaybooks",
+        "summary": "Get recent canvas playbooks",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of recent canvas playbooks has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SbPlaybooksPaginatedDto" } } }
+          }
+        },
+        "tags": ["sb-playbooks"]
+      }
+    },
+    "/sb-playbooks/{owner}/{name}/{version}": {
+      "get": {
+        "operationId": "SbPlaybooksController_getDetailBySlug",
+        "summary": "Get canvas playbook's details",
+        "parameters": [
+          { "name": "owner", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "name", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "version", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the canvas playbook's details",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SbPlaybookDto" } } }
+          },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["sb-playbooks"]
+      }
+    },
+    "/sb-playbooks/featured": {
+      "get": {
+        "operationId": "SbPlaybooksController_getFeaturedSbPlaybooks",
+        "summary": "Get featured canvas playbooks",
+        "parameters": [
+          { "name": "limit", "required": false, "in": "query", "schema": { "type": "number" } },
+          { "name": "nextId", "required": false, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of featured canvas playbooks has been retrieved.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BasePaginatedDto" } } }
+          }
+        },
+        "tags": ["sb-playbooks"]
+      }
+    },
+    "/sb-playbooks/{id}": {
+      "get": {
+        "operationId": "SbPlaybooksController_getDetailById",
+        "summary": "Get canvas playbook's details",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "Get the canvas playbook's details",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SbPlaybookDto" } } }
+          },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["sb-playbooks"]
+      },
+      "delete": {
+        "operationId": "SbPlaybooksController_deleteSbPlaybook",
+        "summary": "Deletes a version of a canvas playbook ",
+        "parameters": [{ "name": "id", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "204": { "description": "The canvas playbook has been successfully deleted." },
+          "400": { "description": "The id provided doesn't have a valid format or is missing." },
+          "401": { "description": "The token is not valid or is missing." },
+          "403": { "description": "The user doesn't have access to use this endpoint." },
+          "404": { "description": "The id is not found." }
+        },
+        "tags": ["sb-playbooks"],
+        "security": [{ "bearer": [] }]
+      }
+    }
+  },
+  "info": {
+    "title": "Swimlane Marketplace",
+    "description": "Swimlane Marketplace API Documentation",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [{ "url": "https://marketplace.swimlane.com/api" }],
+  "components": {
+    "securitySchemes": { "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" } },
+    "schemas": {
+      "LoginDto": {
+        "type": "object",
+        "properties": { "username": { "type": "string" }, "password": { "type": "string" } },
+        "required": ["username", "password"]
+      },
+      "AuthResponseDto": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string" },
+          "email": { "type": "string" },
+          "isAdmin": { "type": "boolean" },
+          "accessToken": { "type": "string" }
+        },
+        "required": ["username", "email", "isAdmin", "accessToken"]
+      },
+      "HealthMonitoringDto": {
+        "type": "object",
+        "properties": { "mongoConnection": { "type": "string" }, "s3Connection": { "type": "string" } },
+        "required": ["mongoConnection", "s3Connection"]
+      },
+      "CategoryDto": {
+        "type": "object",
+        "properties": { "_id": { "type": "string" }, "name": { "type": "string" } },
+        "required": ["_id", "name"]
+      },
+      "CategoriesPaginatedDto": {
+        "type": "object",
+        "properties": {
+          "categories": { "type": "array", "items": { "$ref": "#/components/schemas/CategoryDto" } },
+          "nextId": { "type": "string" }
+        },
+        "required": ["categories"]
+      },
+      "FeaturedDto": {
+        "type": "object",
+        "properties": { "author": { "type": "string" }, "connectorName": { "type": "string" } },
+        "required": ["author", "connectorName"]
+      },
+      "FeaturedConnectorsPaginatedDto": {
+        "type": "object",
+        "properties": {
+          "featuredConnectors": { "type": "array", "items": { "$ref": "#/components/schemas/FeaturedDto" } },
+          "nextId": { "type": "string" }
+        },
+        "required": ["featuredConnectors"]
+      },
+      "BaseResponseDto": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "name": { "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "description": { "type": "string" },
+          "title": { "type": "string" },
+          "author": { "type": "string" },
+          "version": { "type": "string" },
+          "featured": { "type": "boolean" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "meta": { "type": "object" },
+          "vendor": { "type": "string" },
+          "contentType": { "type": "object" }
+        },
+        "required": [
+          "_id",
+          "name",
+          "updatedAt",
+          "createdAt",
+          "description",
+          "title",
+          "author",
+          "version",
+          "featured",
+          "keywords",
+          "meta",
+          "vendor",
+          "contentType"
+        ]
+      },
+      "GetEntitiesResponseDto": {
+        "type": "object",
+        "properties": {
+          "result": { "type": "array", "items": { "$ref": "#/components/schemas/BaseResponseDto" } },
+          "suggestions": { "type": "array", "items": { "$ref": "#/components/schemas/BaseResponseDto" } },
+          "nextId": { "type": "string" },
+          "count": { "type": "number" }
+        },
+        "required": ["result", "suggestions"]
+      },
+      "BasePaginatedDto": {
+        "type": "object",
+        "properties": {
+          "nextId": { "type": "string" },
+          "results": { "type": "array", "items": { "$ref": "#/components/schemas/BaseResponseDto" } },
+          "totalCount": { "type": "number" },
+          "count": { "type": "number" }
+        },
+        "required": ["nextId", "results", "totalCount"]
+      },
+      "ConnectorResponseDto": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "name": { "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "description": { "type": "string" },
+          "title": { "type": "string" },
+          "author": { "type": "string" },
+          "version": { "type": "string" },
+          "featured": { "type": "boolean" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "meta": { "type": "object" }
+        },
+        "required": [
+          "_id",
+          "name",
+          "updatedAt",
+          "createdAt",
+          "description",
+          "title",
+          "author",
+          "version",
+          "featured",
+          "keywords",
+          "meta"
+        ]
+      },
+      "ConnectorsPaginatedDto": {
+        "type": "object",
+        "properties": {
+          "nextId": { "type": "string" },
+          "results": { "type": "array", "items": { "$ref": "#/components/schemas/BaseResponseDto" } },
+          "totalCount": { "type": "number" },
+          "count": { "type": "number" },
+          "connectors": { "type": "array", "items": { "$ref": "#/components/schemas/ConnectorResponseDto" } }
+        },
+        "required": ["nextId", "results", "totalCount", "connectors"]
+      },
+      "ConnectorDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "iconImage": { "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "description": { "type": "string" },
+          "title": { "type": "string" },
+          "author": { "type": "string" },
+          "version": { "type": "string" },
+          "featured": { "type": "boolean" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "meta": { "type": "object" },
+          "readme": { "type": "string" },
+          "vendor": { "type": "string" },
+          "schema": { "type": "string" },
+          "seo": { "type": "object" },
+          "bugs": { "type": "string" },
+          "homepage": { "type": "string" },
+          "repository": { "type": "string" },
+          "license": { "type": "string" },
+          "product": { "type": "string" },
+          "changelog": { "type": "string" },
+          "actions": { "type": "object" },
+          "assets": { "type": "object" },
+          "appDirect": { "type": "object" }
+        },
+        "required": [
+          "name",
+          "iconImage",
+          "updatedAt",
+          "createdAt",
+          "description",
+          "title",
+          "author",
+          "version",
+          "featured",
+          "keywords",
+          "meta",
+          "readme",
+          "vendor",
+          "schema",
+          "seo",
+          "bugs",
+          "homepage",
+          "repository",
+          "license",
+          "product",
+          "changelog",
+          "actions",
+          "assets",
+          "appDirect"
+        ]
+      },
+      "ConnectorVersion": {
+        "type": "object",
+        "properties": { "name": { "type": "string" }, "version": { "type": "string" } },
+        "required": ["name", "version"]
+      },
+      "SolutionResponseDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "featured": { "type": "boolean" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "author": { "type": "string" },
+          "description": { "type": "string" },
+          "meta": { "type": "object" },
+          "title": { "type": "string" },
+          "version": { "type": "string" },
+          "components": { "type": "array", "items": { "type": "string" } },
+          "dashboards": { "type": "array", "items": { "type": "string" } },
+          "reports": { "type": "array", "items": { "type": "string" } },
+          "workspaces": { "type": "array", "items": { "type": "string" } },
+          "applications": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": [
+          "name",
+          "featured",
+          "createdAt",
+          "updatedAt",
+          "keywords",
+          "author",
+          "description",
+          "meta",
+          "title",
+          "version",
+          "components",
+          "dashboards",
+          "reports",
+          "workspaces",
+          "applications"
+        ]
+      },
+      "SolutionsPaginatedDto": {
+        "type": "object",
+        "properties": {
+          "nextId": { "type": "string" },
+          "results": { "type": "array", "items": { "$ref": "#/components/schemas/SolutionResponseDto" } },
+          "totalCount": { "type": "number" }
+        },
+        "required": ["nextId", "results", "totalCount"]
+      },
+      "SolutionDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "iconImage": { "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "description": { "type": "string" },
+          "title": { "type": "string" },
+          "author": { "type": "string" },
+          "version": { "type": "string" },
+          "featured": { "type": "boolean" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "meta": { "type": "object" },
+          "readme": { "type": "string" },
+          "vendor": { "type": "string" },
+          "schema": { "type": "string" },
+          "seo": { "type": "object" },
+          "docs": { "type": "string" },
+          "previewImage": { "type": "string" },
+          "components": { "type": "array", "items": { "type": "string" } },
+          "dashboards": { "type": "array", "items": { "type": "string" } },
+          "reports": { "type": "array", "items": { "type": "string" } },
+          "workspaces": { "type": "array", "items": { "type": "string" } },
+          "applications": { "type": "array", "items": { "type": "string" } },
+          "appDirect": { "type": "object" }
+        },
+        "required": [
+          "name",
+          "iconImage",
+          "updatedAt",
+          "createdAt",
+          "description",
+          "title",
+          "author",
+          "version",
+          "featured",
+          "keywords",
+          "meta",
+          "readme",
+          "vendor",
+          "schema",
+          "seo",
+          "docs",
+          "previewImage",
+          "components",
+          "dashboards",
+          "reports",
+          "workspaces",
+          "applications",
+          "appDirect"
+        ]
+      },
+      "ComponentResponseDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "featured": { "type": "boolean" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "author": { "type": "string" },
+          "description": { "type": "string" },
+          "meta": { "type": "object" },
+          "title": { "type": "string" },
+          "version": { "type": "string" },
+          "components": { "type": "object" },
+          "applications": { "type": "array", "items": { "type": "string" } },
+          "assets": { "type": "array", "items": { "type": "string" } },
+          "connectors": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": [
+          "name",
+          "featured",
+          "createdAt",
+          "updatedAt",
+          "keywords",
+          "author",
+          "description",
+          "meta",
+          "title",
+          "version",
+          "components",
+          "applications",
+          "assets",
+          "connectors"
+        ]
+      },
+      "ComponentsPaginatedDto": {
+        "type": "object",
+        "properties": {
+          "nextId": { "type": "string" },
+          "results": { "type": "array", "items": { "$ref": "#/components/schemas/ComponentResponseDto" } },
+          "totalCount": { "type": "number" }
+        },
+        "required": ["nextId", "results", "totalCount"]
+      },
+      "ComponentDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "iconImage": { "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "description": { "type": "string" },
+          "title": { "type": "string" },
+          "author": { "type": "string" },
+          "version": { "type": "string" },
+          "featured": { "type": "boolean" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "meta": { "type": "object" },
+          "readme": { "type": "string" },
+          "vendor": { "type": "string" },
+          "schema": { "type": "string" },
+          "seo": { "type": "object" },
+          "docs": { "type": "string" },
+          "component": { "type": "object" },
+          "assets": { "type": "array", "items": { "type": "string" } },
+          "applications": { "type": "array", "items": { "type": "string" } },
+          "connectors": { "type": "array", "items": { "type": "string" } },
+          "appDirect": { "type": "object" }
+        },
+        "required": [
+          "name",
+          "iconImage",
+          "updatedAt",
+          "createdAt",
+          "description",
+          "title",
+          "author",
+          "version",
+          "featured",
+          "keywords",
+          "meta",
+          "readme",
+          "vendor",
+          "schema",
+          "seo",
+          "docs",
+          "component",
+          "assets",
+          "applications",
+          "connectors",
+          "appDirect"
+        ]
+      },
+      "IntentResponseDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "featured": { "type": "boolean" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "author": { "type": "string" },
+          "description": { "type": "string" },
+          "meta": { "type": "object" },
+          "title": { "type": "string" },
+          "version": { "type": "string" }
+        },
+        "required": [
+          "name",
+          "featured",
+          "createdAt",
+          "updatedAt",
+          "keywords",
+          "author",
+          "description",
+          "meta",
+          "title",
+          "version"
+        ]
+      },
+      "IntentsPaginatedDto": {
+        "type": "object",
+        "properties": {
+          "nextId": { "type": "string" },
+          "results": { "type": "array", "items": { "$ref": "#/components/schemas/IntentResponseDto" } }
+        },
+        "required": ["nextId", "results"]
+      },
+      "IntentDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "iconImage": { "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "description": { "type": "string" },
+          "title": { "type": "string" },
+          "author": { "type": "string" },
+          "version": { "type": "string" },
+          "featured": { "type": "boolean" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "meta": { "type": "object" },
+          "readme": { "type": "string" },
+          "vendor": { "type": "string" },
+          "schema": { "type": "string" },
+          "seo": { "type": "object" },
+          "docs": { "type": "string" },
+          "previewImage": { "type": "string" }
+        },
+        "required": [
+          "name",
+          "iconImage",
+          "updatedAt",
+          "createdAt",
+          "description",
+          "title",
+          "author",
+          "version",
+          "featured",
+          "keywords",
+          "meta",
+          "readme",
+          "vendor",
+          "schema",
+          "seo",
+          "docs",
+          "previewImage"
+        ]
+      },
+      "SbComponentResponseDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "featured": { "type": "boolean" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "author": { "type": "string" },
+          "description": { "type": "string" },
+          "meta": { "type": "object" },
+          "title": { "type": "string" },
+          "version": { "type": "string" },
+          "solutions": { "type": "array", "items": { "type": "string" } },
+          "components": { "type": "array", "items": { "type": "string" } },
+          "applications": { "type": "array", "items": { "type": "string" } },
+          "applets": { "type": "array", "items": { "type": "string" } },
+          "reports": { "type": "array", "items": { "type": "string" } },
+          "workspaces": { "type": "array", "items": { "type": "string" } },
+          "dashboards": { "type": "array", "items": { "type": "string" } },
+          "webhooks": { "type": "array", "items": { "type": "string" } },
+          "assets": { "type": "array", "items": { "type": "string" } },
+          "connectors": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": [
+          "name",
+          "featured",
+          "createdAt",
+          "updatedAt",
+          "keywords",
+          "author",
+          "description",
+          "meta",
+          "title",
+          "version",
+          "solutions",
+          "components",
+          "applications",
+          "applets",
+          "reports",
+          "workspaces",
+          "dashboards",
+          "webhooks",
+          "assets",
+          "connectors"
+        ]
+      },
+      "SbComponentsPaginatedDto": {
+        "type": "object",
+        "properties": {
+          "nextId": { "type": "string" },
+          "results": { "type": "array", "items": { "$ref": "#/components/schemas/SbComponentResponseDto" } },
+          "totalCount": { "type": "number" }
+        },
+        "required": ["nextId", "results", "totalCount"]
+      },
+      "SbComponentDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "iconImage": { "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "description": { "type": "string" },
+          "title": { "type": "string" },
+          "author": { "type": "string" },
+          "version": { "type": "string" },
+          "featured": { "type": "boolean" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "meta": { "type": "object" },
+          "readme": { "type": "string" },
+          "vendor": { "type": "string" },
+          "schema": { "type": "string" },
+          "seo": { "type": "object" },
+          "docs": { "type": "string" },
+          "previewImage": { "type": "string" },
+          "appDirect": { "type": "object" }
+        },
+        "required": [
+          "name",
+          "iconImage",
+          "updatedAt",
+          "createdAt",
+          "description",
+          "title",
+          "author",
+          "version",
+          "featured",
+          "keywords",
+          "meta",
+          "readme",
+          "vendor",
+          "schema",
+          "seo",
+          "docs",
+          "previewImage",
+          "appDirect"
+        ]
+      },
+      "SbSolutionResponseDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "featured": { "type": "boolean" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "author": { "type": "string" },
+          "description": { "type": "string" },
+          "meta": { "type": "object" },
+          "title": { "type": "string" },
+          "version": { "type": "string" },
+          "solutionPlaybooks": { "type": "array", "items": { "type": "string" } },
+          "components": { "type": "array", "items": { "type": "string" } },
+          "applications": { "type": "array", "items": { "type": "string" } },
+          "applets": { "type": "array", "items": { "type": "string" } },
+          "reports": { "type": "array", "items": { "type": "string" } },
+          "workspaces": { "type": "array", "items": { "type": "string" } },
+          "dashboards": { "type": "array", "items": { "type": "string" } },
+          "webhooks": { "type": "array", "items": { "type": "string" } },
+          "assets": { "type": "array", "items": { "type": "string" } },
+          "connectors": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": [
+          "name",
+          "featured",
+          "createdAt",
+          "updatedAt",
+          "keywords",
+          "author",
+          "description",
+          "meta",
+          "title",
+          "version",
+          "solutionPlaybooks",
+          "components",
+          "applications",
+          "applets",
+          "reports",
+          "workspaces",
+          "dashboards",
+          "webhooks",
+          "assets",
+          "connectors"
+        ]
+      },
+      "SbSolutionsPaginatedDto": {
+        "type": "object",
+        "properties": {
+          "nextId": { "type": "string" },
+          "results": { "type": "array", "items": { "$ref": "#/components/schemas/SbSolutionResponseDto" } },
+          "totalCount": { "type": "number" }
+        },
+        "required": ["nextId", "results", "totalCount"]
+      },
+      "SbSolutionDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "iconImage": { "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "description": { "type": "string" },
+          "title": { "type": "string" },
+          "author": { "type": "string" },
+          "version": { "type": "string" },
+          "featured": { "type": "boolean" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "meta": { "type": "object" },
+          "readme": { "type": "string" },
+          "vendor": { "type": "string" },
+          "schema": { "type": "string" },
+          "seo": { "type": "object" },
+          "docs": { "type": "string" },
+          "previewImage": { "type": "string" },
+          "appDirect": { "type": "object" }
+        },
+        "required": [
+          "name",
+          "iconImage",
+          "updatedAt",
+          "createdAt",
+          "description",
+          "title",
+          "author",
+          "version",
+          "featured",
+          "keywords",
+          "meta",
+          "readme",
+          "vendor",
+          "schema",
+          "seo",
+          "docs",
+          "previewImage",
+          "appDirect"
+        ]
+      },
+      "ProductSyncResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "product_name": { "type": "string" },
+          "version": { "type": "string" },
+          "image": { "type": "object" },
+          "repository": { "type": "string" },
+          "keywords": { "type": "string" },
+          "author": { "type": "string" },
+          "vendor": { "type": "string" },
+          "description": { "type": "string" },
+          "content_type": { "type": "object" },
+          "marketplace_stub": { "type": "boolean" },
+          "app_direct": { "type": "object" },
+          "external_readme": { "type": "string" },
+          "external_data": { "type": "object" },
+          "asssets": { "type": "array", "items": { "type": "string" } },
+          "applications": { "type": "array", "items": { "type": "string" } },
+          "connectors": { "type": "array", "items": { "type": "string" } },
+          "components": { "type": "array", "items": { "type": "string" } },
+          "actions": { "type": "object" },
+          "actions_count": { "type": "number" }
+        },
+        "required": [
+          "id",
+          "title",
+          "product_name",
+          "version",
+          "image",
+          "repository",
+          "keywords",
+          "author",
+          "vendor",
+          "description",
+          "content_type",
+          "marketplace_stub",
+          "app_direct",
+          "external_readme",
+          "external_data",
+          "asssets",
+          "applications",
+          "connectors",
+          "components",
+          "actions",
+          "actions_count"
+        ]
+      },
+      "RecordUpdateDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "description": "The Id of the AppDirect product retrieved from the Graphql API" },
+          "mapi_id": {
+            "type": "string",
+            "description": "The mongoDB Id of the product in respective marketplace collection"
+          },
+          "version": { "type": "string" },
+          "type": { "type": "object" },
+          "product_name": { "type": "string" },
+          "timestamp": { "type": "string" },
+          "product_id": {
+            "type": "string",
+            "description": "The Id of the AppDirect product retrieved from the REST API"
+          }
+        },
+        "required": ["id", "mapi_id", "version", "type", "product_name", "timestamp", "product_id"]
+      },
+      "CategoryEntityDto": {
+        "type": "object",
+        "properties": {
+          "entity": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["connector", "solution", "component", "sbComponent", "sbSolution", "intent", "all", "sbPlaybook"]
+            }
+          }
+        },
+        "required": ["entity"]
+      },
+      "EntityCountResponseDto": {
+        "type": "object",
+        "properties": {
+          "connectorsActionCount": { "type": "number" },
+          "connectorsCount": { "type": "number" },
+          "componentsCount": { "type": "number" },
+          "sbComponentsCount": { "type": "number" },
+          "solutionsCount": { "type": "number" },
+          "sbSolutionsCount": { "type": "number" },
+          "sbPlaybooksCount": { "type": "number" }
+        },
+        "required": [
+          "connectorsActionCount",
+          "connectorsCount",
+          "componentsCount",
+          "sbComponentsCount",
+          "solutionsCount",
+          "sbSolutionsCount",
+          "sbPlaybooksCount"
+        ]
+      },
+      "SbPlaybookResponseDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "featured": { "type": "boolean" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "author": { "type": "string" },
+          "description": { "type": "string" },
+          "meta": { "type": "object" },
+          "title": { "type": "string" },
+          "version": { "type": "string" },
+          "assets": { "type": "array", "items": { "type": "string" } },
+          "connectors": { "type": "array", "items": { "type": "string" } },
+          "solutionPlaybooks": { "type": "array", "items": { "type": "string" } },
+          "components": { "type": "array", "items": { "type": "string" } },
+          "applications": { "type": "array", "items": { "type": "string" } },
+          "applets": { "type": "array", "items": { "type": "string" } },
+          "reports": { "type": "array", "items": { "type": "string" } },
+          "workspaces": { "type": "array", "items": { "type": "string" } },
+          "dashboards": { "type": "array", "items": { "type": "string" } },
+          "webhooks": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": [
+          "name",
+          "featured",
+          "createdAt",
+          "updatedAt",
+          "keywords",
+          "author",
+          "description",
+          "meta",
+          "title",
+          "version",
+          "assets",
+          "connectors",
+          "solutionPlaybooks",
+          "components",
+          "applications",
+          "applets",
+          "reports",
+          "workspaces",
+          "dashboards",
+          "webhooks"
+        ]
+      },
+      "SbPlaybooksPaginatedDto": {
+        "type": "object",
+        "properties": {
+          "nextId": { "type": "string" },
+          "results": { "type": "array", "items": { "$ref": "#/components/schemas/SbPlaybookResponseDto" } },
+          "totalCount": { "type": "number" }
+        },
+        "required": ["nextId", "results", "totalCount"]
+      },
+      "SbPlaybookDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "iconImage": { "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "description": { "type": "string" },
+          "title": { "type": "string" },
+          "author": { "type": "string" },
+          "version": { "type": "string" },
+          "featured": { "type": "boolean" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "meta": { "type": "object" },
+          "readme": { "type": "string" },
+          "vendor": { "type": "string" },
+          "schema": { "type": "string" },
+          "seo": { "type": "object" },
+          "docs": { "type": "string" },
+          "assets": { "type": "array", "items": { "type": "string" } },
+          "connectors": { "type": "array", "items": { "type": "string" } },
+          "solutionPlaybooks": { "type": "array", "items": { "type": "string" } },
+          "components": { "type": "array", "items": { "type": "string" } },
+          "applications": { "type": "array", "items": { "type": "string" } },
+          "applets": { "type": "array", "items": { "type": "string" } },
+          "reports": { "type": "array", "items": { "type": "string" } },
+          "workspaces": { "type": "array", "items": { "type": "string" } },
+          "dashboards": { "type": "array", "items": { "type": "string" } },
+          "webhooks": { "type": "array", "items": { "type": "string" } },
+          "appDirect": { "type": "object" }
+        },
+        "required": [
+          "name",
+          "iconImage",
+          "updatedAt",
+          "createdAt",
+          "description",
+          "title",
+          "author",
+          "version",
+          "featured",
+          "keywords",
+          "meta",
+          "readme",
+          "vendor",
+          "schema",
+          "seo",
+          "docs",
+          "assets",
+          "connectors",
+          "solutionPlaybooks",
+          "components",
+          "applications",
+          "applets",
+          "reports",
+          "workspaces",
+          "dashboards",
+          "webhooks",
+          "appDirect"
+        ]
+      }
+    }
+  },
+  "externalDocs": { "description": "Swimlane Marketplace", "url": "/openapi.json" }
+}

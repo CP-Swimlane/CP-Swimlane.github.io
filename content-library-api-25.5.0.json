@@ -1,0 +1,1249 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/content-library/account/{accountId}/tenant/{tenantId}/content/index": {
+      "post": {
+        "operationId": "ContentLibraryController_indexContent",
+        "summary": "Index new content.",
+        "deprecated": true,
+        "description": "DEPRECATED: Use ContentLibraryAccountController.indexContent instead",
+        "parameters": [
+          { "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "tenantId", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "multipart/form-data": { "schema": { "$ref": "#/components/schemas/IndexContentDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AutoSyncResponseDTo" } } }
+          },
+          "201": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/IndexContentResponseDto" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId/tenant/:tenantId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/tenant/{tenantId}/content": {
+      "post": {
+        "operationId": "ContentLibraryController_getContents",
+        "summary": "Get all contents list.",
+        "deprecated": true,
+        "description": "DEPRECATED: Use ContentLibraryAccountController.getContents instead",
+        "parameters": [
+          { "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "tenantId", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetContentsDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetContentsResponseDto" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId/tenant/:tenantId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/tenant/{tenantId}/content/download/{contentId}": {
+      "get": {
+        "operationId": "ContentLibraryController_download",
+        "summary": "",
+        "deprecated": true,
+        "description": "DEPRECATED: Use ContentLibraryAccountController.download instead",
+        "parameters": [
+          { "name": "contentId", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "tenantId", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["content-library/account/:accountId/tenant/:tenantId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/tenant/{tenantId}/content/{id}": {
+      "patch": {
+        "operationId": "ContentLibraryController_updateContent",
+        "summary": "Update content.",
+        "deprecated": true,
+        "description": "DEPRECATED: Use ContentLibraryAccountController.updateContent instead",
+        "parameters": [
+          { "name": "id", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "tenantId", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateContentDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateContentResponseDto" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId/tenant/:tenantId"],
+        "security": [{ "bearer": [] }]
+      },
+      "get": {
+        "operationId": "ContentLibraryController_getDetailById",
+        "summary": "Get all content detail by ID.",
+        "deprecated": true,
+        "description": "DEPRECATED: Use ContentLibraryAccountController.getDetailById instead",
+        "parameters": [
+          { "name": "id", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "tenantId", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetContentByIdDto" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId/tenant/:tenantId"],
+        "security": [{ "bearer": [] }]
+      },
+      "delete": {
+        "operationId": "ContentLibraryController_deleteContent",
+        "summary": "Delete content by ID.",
+        "deprecated": true,
+        "description": "DEPRECATED: Use ContentLibraryAccountController.deleteContent instead",
+        "parameters": [
+          { "name": "id", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "tenantId", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DeleteContentDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DeleteContentResponseDto" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId/tenant/:tenantId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/index": {
+      "post": {
+        "operationId": "ContentLibraryAccountController_indexContent",
+        "summary": "Index new content.",
+        "description": "Index new content into Content Library.",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/IndexContentDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AutoSyncResponseDTo" } } }
+          },
+          "201": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/IndexContentResponseDto" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/commit-differences": {
+      "post": {
+        "operationId": "ContentLibraryAccountController_commitDifferences",
+        "summary": "Commit differences.",
+        "description": "Get commit differences between local and remote repository.",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetCommitDifferencesDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/CommitDifferencesResponseDto" } }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/check-validity": {
+      "get": {
+        "operationId": "ContentLibraryAccountController_checkValidity",
+        "summary": "Check if a version is valid for an SSP getting published.",
+        "description": "Check if a version is valid for an SSP getting published.",
+        "parameters": [
+          { "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "name", "required": true, "in": "query", "schema": { "type": "string" } },
+          { "name": "newVersion", "required": true, "in": "query", "schema": { "type": "string" } },
+          { "name": "currentVersion", "required": true, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CheckVersvionValidityDto" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/resolve-conflicts": {
+      "post": {
+        "operationId": "ContentLibraryAccountController_resolveConflicts",
+        "summary": "Resolve conflicts.",
+        "description": "Resolve conflicts occured during merging of local and remote branch.",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ResolveConflictsDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ResolveConflictsResponseDto" } }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content": {
+      "post": {
+        "operationId": "ContentLibraryAccountController_getContents",
+        "summary": "Get all contents list.",
+        "description": "Get the list of all contents. Can be filtered and sorted.\n\n<b>Default</b>: <list><li><i>sortField:</i> _id (or) updatedAt</li><li><i>sortOrder:</i> desc</li></list>",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetContentsDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetContentsResponseDto" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/download/repo": {
+      "get": {
+        "operationId": "ContentLibraryAccountController_downloadRepo",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "" } },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/download/{contentId}": {
+      "get": {
+        "operationId": "ContentLibraryAccountController_download",
+        "parameters": [
+          { "name": "contentId", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/ssp-restore": {
+      "post": {
+        "operationId": "ContentLibraryAccountController_restoreSSP",
+        "summary": "Restore SSP to a previous hash.",
+        "description": "Restore SSP to a previous hash.",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RestoreSspDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ResetResponseDto" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/reset": {
+      "post": {
+        "operationId": "ContentLibraryAccountController_resetToTimestamp",
+        "summary": "Reset Library to a timestamp.",
+        "description": "Reset Library to a timestamp and delete all contents after that timestamp.",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ResetContentDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ResetResponseDto" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/history": {
+      "get": {
+        "operationId": "ContentLibraryAccountController_getHistory",
+        "summary": "View History of Library.",
+        "description": "View Commit History of Library for the account.",
+        "parameters": [
+          { "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "limit", "required": true, "in": "query", "schema": { "type": "number" } },
+          { "name": "offset", "required": true, "in": "query", "schema": { "type": "number" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Array" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/ssp-history": {
+      "get": {
+        "operationId": "ContentLibraryAccountController_getSspHistory",
+        "summary": "View History of SSP.",
+        "description": "View Commit History of SSP.",
+        "parameters": [
+          { "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "limit", "required": true, "in": "query", "schema": { "type": "number" } },
+          { "name": "offset", "required": true, "in": "query", "schema": { "type": "number" } },
+          { "name": "name", "required": true, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Array" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/{id}": {
+      "patch": {
+        "operationId": "ContentLibraryAccountController_updateContent",
+        "summary": "Update content.",
+        "description": "Update existing content in Content Library.",
+        "parameters": [
+          { "name": "id", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateContentDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateContentResponseDto" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      },
+      "get": {
+        "operationId": "ContentLibraryAccountController_getDetailById",
+        "summary": "Get all content detail by ID.",
+        "description": "",
+        "parameters": [
+          { "name": "id", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetContentByIdDto" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      },
+      "delete": {
+        "operationId": "ContentLibraryAccountController_deleteContent",
+        "summary": "Delete content by ID.",
+        "parameters": [
+          { "name": "id", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DeleteContentDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/DeleteContentResponseDto" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/nfs-details": {
+      "get": {
+        "operationId": "ContentLibraryAccountController_isNfsMounted",
+        "summary": "Get the NFS Mount details at given path.",
+        "description": "Get the NFS Mount details at given path.",
+        "parameters": [
+          { "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } },
+          { "name": "path", "required": true, "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetNFSDetailsResponseDto" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/delete-repository": {
+      "delete": {
+        "operationId": "ContentLibraryAccountController_deleteRepository",
+        "summary": "Delete repository.",
+        "description": "Delete Repository",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/DeleteRepositoryResponseDto" } }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/push": {
+      "post": {
+        "operationId": "ContentLibraryAccountController_manualPush",
+        "summary": "Manual push.",
+        "description": "Push changes from local repository to remote repository.",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/PushPullOperationUserDetailsDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PushPullResponseDTo" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/pull": {
+      "post": {
+        "operationId": "ContentLibraryAccountController_manualPull",
+        "summary": "Manual pull.",
+        "description": "Pull changes from remote repository to local repository.",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/PushPullOperationUserDetailsDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/PushPullResponseDTo" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/get-repo-size": {
+      "post": {
+        "operationId": "ContentLibraryAccountController_getRepoSize",
+        "summary": "Get the size of the repository.",
+        "description": "Get the size of the repository.",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetRepoSizeRequestDto" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GetRepoSizeResponseDto" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/populate-content-version": {
+      "post": {
+        "operationId": "ContentLibraryAccountController_populateContentVersion",
+        "summary": "Populate content version from Git Repo.",
+        "description": "Populate Content Version from Git Repo into Database.",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SuccessResponseDto" } } }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/content/test-connection": {
+      "post": {
+        "operationId": "ContentLibraryAccountController_testConnection",
+        "summary": "Perform a test connection to the repository.",
+        "description": "Perform a test connection to the repository to check if it is accessible",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/TestConnectionResponseDto" } }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/inventory/asset": {
+      "post": {
+        "operationId": "AssetInventoryController_getAssetInventory",
+        "summary": "Get asset inventory",
+        "description": "Get asset inventory based on given filters",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/GetAssetInventoryRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/GetAssetInventoryResponseDto" } }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId/inventory/asset"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/inventory/asset/bulk-update": {
+      "put": {
+        "operationId": "bulkUpdateAssets",
+        "summary": "Bulk update assets",
+        "description": "Updates the assets in multiple tenants",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AssetBulkOperationRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": { "description": "Assets successfully updated in bulk" },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId/inventory/asset"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/inventory/asset/bulk-delete": {
+      "put": {
+        "operationId": "bulkDeleteAssets",
+        "summary": "Bulk delete assets",
+        "description": "Deletes the assets in multiple tenants",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/AssetBulkOperationRequestDto" } }
+          }
+        },
+        "responses": {
+          "200": { "description": "Assets successfully deleted in bulk" },
+          "400": { "description": "Bad request" }
+        },
+        "tags": ["content-library/account/:accountId/inventory/asset"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/migrations": {
+      "get": {
+        "operationId": "MigrationController_findMigrations",
+        "summary": "Get migration tracking",
+        "description": "Get migration tracking for the name and account given",
+        "parameters": [
+          { "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } },
+          {
+            "name": "name",
+            "required": false,
+            "in": "query",
+            "description": "Get migration tracking for the name default empty string",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/MigrationTrackingResponseDto" } }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId/migrations"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/migrations/config-manager-inventory": {
+      "get": {
+        "operationId": "MigrationController_findMigrationsForConfigManagerInventory",
+        "summary": "Get migration tracking",
+        "description": "Get migration tracking for the name and account given",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/MigrationTrackingResponseDto" } }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId/migrations"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/content-library/account/{accountId}/migrations/content-library": {
+      "get": {
+        "operationId": "MigrationController_findMigrationsForContentLibrary",
+        "summary": "Get migration tracking",
+        "description": "Get migration tracking for the name and account given",
+        "parameters": [{ "name": "accountId", "required": true, "in": "path", "schema": { "type": "string" } }],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/MigrationTrackingResponseDto" } }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponseDto" } } }
+          }
+        },
+        "tags": ["content-library/account/:accountId/migrations"],
+        "security": [{ "bearer": [] }]
+      }
+    }
+  },
+  "info": {
+    "title": "Content Library API",
+    "description": "Content Library API Documentation.",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": { "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" } },
+    "schemas": {
+      "DeployedDto": {
+        "type": "object",
+        "properties": {
+          "tenantName": { "type": "string" },
+          "tenantId": { "type": "string" },
+          "lastDeployedAt": { "format": "date-time", "type": "string" }
+        },
+        "required": ["tenantName", "tenantId"]
+      },
+      "SchemaMixed": { "type": "object", "properties": {} },
+      "NewContentDto": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "name": { "type": "string" },
+          "createdBy": { "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedBy": { "type": "string" },
+          "version": { "type": "string" },
+          "sourceTenantName": { "type": "string" },
+          "sourceTenantId": { "type": "string" },
+          "deployedOn": { "type": "array", "items": { "$ref": "#/components/schemas/DeployedDto" } },
+          "runningOn": { "type": "array", "items": { "$ref": "#/components/schemas/DeployedDto" } },
+          "archived": { "type": "boolean" },
+          "metadata": { "$ref": "#/components/schemas/SchemaMixed" }
+        },
+        "required": [
+          "_id",
+          "name",
+          "createdBy",
+          "updatedAt",
+          "createdAt",
+          "updatedBy",
+          "version",
+          "sourceTenantName",
+          "sourceTenantId",
+          "deployedOn",
+          "runningOn",
+          "archived"
+        ]
+      },
+      "IndexContentResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" },
+          "newContent": { "$ref": "#/components/schemas/NewContentDto" }
+        },
+        "required": ["message", "newContent"]
+      },
+      "ErrorResponseDto": {
+        "type": "object",
+        "properties": {
+          "statusCode": { "type": "number" },
+          "message": { "type": "string" },
+          "error": { "type": "string" }
+        }
+      },
+      "AutoSyncResponseDTo": {
+        "type": "object",
+        "properties": {
+          "preCommitSync": { "type": "boolean" },
+          "status": { "type": "number" },
+          "mergeConflicts": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["preCommitSync", "status", "mergeConflicts"]
+      },
+      "IndexContentDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "createdBy": { "type": "string" },
+          "createdByEmail": { "type": "string" },
+          "sourceTenantName": { "type": "string" },
+          "sourceTenantId": { "type": "string" },
+          "version": { "type": "string" },
+          "deployedOn": { "type": "array", "items": { "type": "string" } },
+          "runningOn": { "type": "array", "items": { "type": "string" } },
+          "manifestVersion": { "type": "string" },
+          "metadata": { "$ref": "#/components/schemas/SchemaMixed" },
+          "file": { "type": "string", "format": "binary" },
+          "commitMessage": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "required": ["name", "createdBy", "sourceTenantName", "sourceTenantId", "version", "file"]
+      },
+      "BaseResponseDto": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "name": { "type": "string" },
+          "createdBy": { "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedBy": { "type": "string" },
+          "version": { "type": "string" },
+          "sourceTenantName": { "type": "string" },
+          "sourceTenantId": { "type": "string" },
+          "deployedOn": { "type": "array", "items": { "$ref": "#/components/schemas/DeployedDto" } },
+          "runningOn": { "type": "array", "items": { "$ref": "#/components/schemas/DeployedDto" } },
+          "archived": { "type": "boolean" }
+        },
+        "required": [
+          "_id",
+          "name",
+          "createdBy",
+          "updatedAt",
+          "createdAt",
+          "updatedBy",
+          "version",
+          "sourceTenantName",
+          "sourceTenantId",
+          "deployedOn",
+          "runningOn",
+          "archived"
+        ]
+      },
+      "GetContentsResponseDto": {
+        "type": "object",
+        "properties": {
+          "result": { "type": "array", "items": { "$ref": "#/components/schemas/BaseResponseDto" } },
+          "nextId": { "type": "string" }
+        },
+        "required": ["result"]
+      },
+      "GetContentsDto": {
+        "type": "object",
+        "properties": {
+          "limit": { "type": "number" },
+          "nextId": { "type": "string" },
+          "filters": { "type": "array", "items": { "type": "string" } },
+          "sortField": { "type": "string" },
+          "sortOrder": { "type": "string" },
+          "showArchived": { "type": "boolean" }
+        }
+      },
+      "UpdateContentBaseDto": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "name": { "type": "string" },
+          "createdBy": { "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedBy": { "type": "string" },
+          "version": { "type": "string" },
+          "sourceTenantName": { "type": "string" },
+          "sourceTenantId": { "type": "string" },
+          "deployedOn": { "type": "array", "items": { "$ref": "#/components/schemas/DeployedDto" } },
+          "runningOn": { "type": "array", "items": { "$ref": "#/components/schemas/DeployedDto" } },
+          "archived": { "type": "boolean" },
+          "metadata": { "$ref": "#/components/schemas/SchemaMixed" },
+          "sspFile": { "type": "string" }
+        },
+        "required": [
+          "_id",
+          "name",
+          "createdBy",
+          "updatedAt",
+          "createdAt",
+          "updatedBy",
+          "version",
+          "sourceTenantName",
+          "sourceTenantId",
+          "deployedOn",
+          "runningOn",
+          "archived"
+        ]
+      },
+      "UpdateContentResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" },
+          "updatedContent": { "$ref": "#/components/schemas/UpdateContentBaseDto" }
+        },
+        "required": ["message", "updatedContent"]
+      },
+      "UpdateContentDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "deployedOn": { "type": "array", "items": { "$ref": "#/components/schemas/DeployedDto" } },
+          "runningOn": { "type": "array", "items": { "$ref": "#/components/schemas/DeployedDto" } },
+          "archived": { "type": "boolean" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "updatedBy": { "type": "string" },
+          "updatedByEmail": { "type": "string" },
+          "version": { "type": "string" },
+          "commitMessage": { "type": "string" }
+        },
+        "required": ["updatedBy"]
+      },
+      "GetContentByIdDto": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "name": { "type": "string" },
+          "createdBy": { "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedBy": { "type": "string" },
+          "version": { "type": "string" },
+          "sourceTenantName": { "type": "string" },
+          "sourceTenantId": { "type": "string" },
+          "deployedOn": { "type": "array", "items": { "$ref": "#/components/schemas/DeployedDto" } },
+          "runningOn": { "type": "array", "items": { "$ref": "#/components/schemas/DeployedDto" } },
+          "archived": { "type": "boolean" },
+          "metadata": { "$ref": "#/components/schemas/SchemaMixed" },
+          "sspFile": { "type": "string" },
+          "uid": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "required": [
+          "_id",
+          "name",
+          "createdBy",
+          "updatedAt",
+          "createdAt",
+          "updatedBy",
+          "version",
+          "sourceTenantName",
+          "sourceTenantId",
+          "deployedOn",
+          "runningOn",
+          "archived",
+          "sspFile"
+        ]
+      },
+      "PushPullResponseDTo": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "number" },
+          "mergeConflicts": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "DeleteContentResponseDto": {
+        "type": "object",
+        "properties": {
+          "deletedContent": { "$ref": "#/components/schemas/GetContentByIdDto" },
+          "syncResult": { "$ref": "#/components/schemas/PushPullResponseDTo" },
+          "statusCode": { "type": "number" },
+          "message": { "type": "string" }
+        },
+        "required": ["deletedContent"]
+      },
+      "DeleteContentDto": {
+        "type": "object",
+        "properties": {
+          "commitMessage": { "type": "string" },
+          "createdBy": { "type": "string" },
+          "createdByEmail": { "type": "string" }
+        },
+        "required": ["commitMessage", "createdBy", "createdByEmail"]
+      },
+      "CommitDifferencesResponseDto": {
+        "type": "object",
+        "properties": { "localCommits": { "type": "number" }, "remoteCommits": { "type": "number" } },
+        "required": ["localCommits", "remoteCommits"]
+      },
+      "GetCommitDifferencesDto": {
+        "type": "object",
+        "properties": { "userName": { "type": "string" }, "userEmail": { "type": "string" } },
+        "required": ["userName", "userEmail"]
+      },
+      "CheckVersvionValidityDto": {
+        "type": "object",
+        "properties": {
+          "validVersion": { "type": "boolean" },
+          "validName": { "type": "boolean" },
+          "reason": { "type": "string" }
+        },
+        "required": ["validVersion", "validName", "reason"]
+      },
+      "ResolveConflictsResponseDto": {
+        "type": "object",
+        "properties": { "status": { "type": "boolean" } },
+        "required": ["status"]
+      },
+      "ConflictedFolderDto": {
+        "type": "object",
+        "properties": { "sspName": { "type": "string" }, "resolutionType": { "type": "string" } },
+        "required": ["sspName", "resolutionType"]
+      },
+      "ResolveConflictsDto": {
+        "type": "object",
+        "properties": {
+          "conflictingData": { "type": "array", "items": { "$ref": "#/components/schemas/ConflictedFolderDto" } },
+          "userName": { "type": "string" },
+          "userEmail": { "type": "string" },
+          "action": { "type": "string" }
+        },
+        "required": ["conflictingData", "userName", "userEmail", "action"]
+      },
+      "ResetResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" },
+          "pushStatus": { "$ref": "#/components/schemas/PushPullResponseDTo" }
+        },
+        "required": ["message"]
+      },
+      "RestoreSspDto": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "updatedBy": { "type": "string" },
+          "updatedByEmail": { "type": "string" },
+          "commitId": { "type": "string" },
+          "commitMessage": { "type": "string" },
+          "version": { "type": "string" },
+          "oldName": { "type": "string" }
+        },
+        "required": ["name", "updatedBy", "updatedByEmail", "commitId", "commitMessage", "version", "oldName"]
+      },
+      "ResetContentDto": {
+        "type": "object",
+        "properties": {
+          "commitMessage": { "type": "string" },
+          "timestamp": { "type": "string" },
+          "commitHash": { "type": "string" },
+          "authorName": { "type": "string" },
+          "authorEmail": { "type": "string" },
+          "version": { "type": "string" },
+          "sspName": { "type": "string" }
+        },
+        "required": ["commitMessage", "timestamp", "commitHash", "authorName", "authorEmail"]
+      },
+      "Array": { "type": "object", "properties": {} },
+      "GetNFSDetailsResponseDto": {
+        "type": "object",
+        "properties": { "nfsMounted": { "type": "boolean" } },
+        "required": ["nfsMounted"]
+      },
+      "DeleteRepositoryResponseDto": {
+        "type": "object",
+        "properties": { "status": { "type": "boolean" }, "message": { "type": "string" } },
+        "required": ["status", "message"]
+      },
+      "PushPullOperationUserDetailsDto": {
+        "type": "object",
+        "properties": { "userName": { "type": "string" }, "userEmail": { "type": "string" } },
+        "required": ["userName", "userEmail"]
+      },
+      "GetRepoSizeResponseDto": {
+        "type": "object",
+        "properties": {
+          "repoSize": { "type": "number" },
+          "repoSizeLimitInMB": { "type": "number" },
+          "repoSizeLimitExceeded": { "type": "boolean" }
+        },
+        "required": ["repoSize", "repoSizeLimitInMB", "repoSizeLimitExceeded"]
+      },
+      "GetRepoSizeRequestDto": { "type": "object", "properties": { "name": { "type": "string" } } },
+      "SuccessResponseDto": {
+        "type": "object",
+        "properties": { "status": { "type": "boolean" } },
+        "required": ["status"]
+      },
+      "TestConnectionResponseDto": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "message": { "type": "string" },
+          "statusCode": { "type": "number" }
+        },
+        "required": ["success", "message", "statusCode"]
+      },
+      "PlaybookDto": { "type": "object", "properties": {} },
+      "AssetType": {
+        "type": "object",
+        "properties": {
+          "connectorAsset": { "type": "string", "description": "Type of connector asset" },
+          "connectorId": { "type": "string", "description": "ID of the connector" },
+          "tenantId": { "type": "string", "description": "Tenant ID associated with the connector" }
+        },
+        "required": ["connectorAsset", "connectorId", "tenantId"]
+      },
+      "AssetUniqueFilterValues": {
+        "type": "object",
+        "properties": {
+          "tenantId": { "description": "Unique tenant IDs", "type": "array", "items": { "type": "string" } },
+          "playbooks": {
+            "description": "Unique playbooks with names and IDs",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/PlaybookDto" }
+          },
+          "assetType": {
+            "description": "Unique connector assets",
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/AssetType" }
+          },
+          "creator": { "description": "Unique creators", "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["tenantId", "playbooks", "assetType", "creator"]
+      },
+      "GetAssetInventoryResponseDto": {
+        "type": "object",
+        "properties": {
+          "totalCount": { "type": "number", "description": "Total count" },
+          "hasNextPage": { "type": "boolean", "description": "Has next page" },
+          "paginatedAssets": { "description": "Data", "type": "array", "items": { "type": "string" } },
+          "uniqueFilterValues": {
+            "description": "Unique filter values",
+            "allOf": [{ "$ref": "#/components/schemas/AssetUniqueFilterValues" }]
+          }
+        },
+        "required": ["totalCount", "hasNextPage", "paginatedAssets", "uniqueFilterValues"]
+      },
+      "GetAssetInventoryRequestDto": {
+        "type": "object",
+        "properties": {
+          "pageNumber": { "type": "number", "description": "Page number" },
+          "pageSize": { "type": "number", "description": "Page size" },
+          "filters": { "description": "Filters", "type": "array", "items": { "type": "string" } },
+          "filterType": { "type": "string", "description": "Filter type" },
+          "returnFilterValues": {
+            "type": "boolean",
+            "description": "Indicates whether to include unique filter values in the response."
+          },
+          "sortByType": { "type": "string", "description": "The field by which to sort" },
+          "isAscending": { "type": "boolean", "description": "Sort order: true for ascending, false for descending" }
+        },
+        "required": [
+          "pageNumber",
+          "pageSize",
+          "filters",
+          "filterType",
+          "returnFilterValues",
+          "sortByType",
+          "isAscending"
+        ]
+      },
+      "AssetBulkOperationRequestDto": {
+        "type": "object",
+        "properties": {
+          "trackingId": { "type": "string", "description": "Tracking Id" },
+          "modifications": { "description": "Modification to asset", "type": "array", "items": { "type": "string" } },
+          "filters": { "description": "Filters", "type": "array", "items": { "type": "string" } },
+          "filterType": { "type": "string", "description": "Filter type" }
+        },
+        "required": ["trackingId", "modifications", "filters", "filterType"]
+      },
+      "MigrationTrackingResponseDto": {
+        "type": "object",
+        "properties": { "migrationTracking": { "type": "array", "items": { "type": "string" } } },
+        "required": ["migrationTracking"]
+      }
+    }
+  }
+}
